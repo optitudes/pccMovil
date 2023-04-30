@@ -161,6 +161,7 @@ const AuthState = props => {
             });
         }
         */
+       console.log("si hay papa");
     }
 
     /**Funcion que permite al usuario cerrar sesion
@@ -190,6 +191,7 @@ const AuthState = props => {
             });
         }
         */
+       console.log("no hay papa");
     }
 
     /**Función que permite mostrar/ocultar las alertas desde algun componente consumidor
@@ -212,8 +214,6 @@ const AuthState = props => {
             successSignin: state.successSignin,
             login,
             logout,
-            handleMessage,
-            makeChange,
             getUserInSession,
         }}>
             {props.children}

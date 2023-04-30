@@ -4,7 +4,7 @@
  */
 
 import React, {useState} from 'react';
-import type {PropsWithChildren} from 'react';
+import type, {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -19,26 +19,28 @@ import AuthState from './src/context/authState';
 import Navigation from './src/navigations/Navigation';
 import { NativeBaseProvider } from 'native-base';
 
-function App(): JSX.Element {
+const App = () => {
   return (
     <AuthState>
           <SafeAreaView style={{ flex: 1 }}>
             <NativeBaseProvider>
               {Platform.OS === "android" ? <StatusBar
                 animated={true}
-                backgroundColor="#26b99a"
+                backgroundColor="#FF0000"
               /> : <View
 
-                style={{ backgroundColor: "#26b99a", height: 100, width: "100%", position: "absolute" }}
+                style={{ backgroundColor: "#FF0000", height: 100, width: "100%", position: "absolute" }}
               >
                 <StatusBar
                   animated={true}
                   translucent={true}
                   barStyle="light-content"
-                  backgroundColor="#26b99a"
+                  backgroundColor="#FF0000"
                 />
+                
               </View>
               }
+              <Navigation isCheckingForUpdate={false} />
             </NativeBaseProvider>
           </SafeAreaView>
   </AuthState>  
