@@ -58,49 +58,63 @@ const AuthState = props => {
      * @param {*} password 
      */
     const login = async (email, password) => {
+        console.log("tututuru");
+        console.log(email);
+        console.log(password);
 
+        
+        
         dispatch({ type: LOADING, payload: true });
 
         let formattedData = {
-            usuario: email,
-            clave: password,
+            email: email,
+            password: password,
         }
+        
         try {
 
-            const res = await httpClient.post("/login", formattedData)
+            console.log("tututuru");
+            
+            const res = await httpClient.post("/auth/login", formattedData);
 
-            if (res.data.status === "success") {
-                let userData = res.data.data.user_data;
-                if (userData.role_id.toString() === ADMINISTRATOR || userData.role_id.toString() === WORK_GROUP) {
-                    authToken(res.data.data.access.access_token);
-                    // console.log("TOKEN LOGIN",res.data.data.access)
-                    await EncryptedStorage.setItem("userToken", res.data.data.access.access_token);
+            if (res.data.success) {
+                console.log("done");
+                console.log(res.data.data );
+                
+                let userData = res.data.data;
+                console.log(userData);
+                console.log(userData.name);
+                console.log(userData.token);
+                
+                    authToken(userData.token);
+                    await EncryptedStorage.setItem("userToken", userData.token);
+
+                    try{
+                        let token = await EncryptedStorage.getItem("userToken");
+                        console.log(token);
+
+                    }catch(err){
+                        console.log("error al cargar token");
+                        
+
+                    }
+
 
                     dispatch({ type: SUCCESS_LOGIN, payload: res.data.data });
-                } else {
-                    await EncryptedStorage.clear();
-                    dispatch({
-                        type: ERROR_LOGIN, payload:
-                        {
-                            title: "Error",
-                            body: "Esta aplicación solo está disponible para administradores y personal de trabajo de conjuntos residenciales",
-                            type: "alert"
-                        }
-                    });
-                }
+                
             } else {
                 await EncryptedStorage.clear();
                 dispatch({
                     type: ERROR_LOGIN, payload:
                     {
-                        title: "Error",
+                        title: "Errorlogin",
                         body: res.data.message,
                         type: "alert"
                     }
                 });
+                
             }
         } catch (err) {
-            // console.error("LOGIN_ERROR", err.response.data);
             await EncryptedStorage.clear();
             const { title, body } = evaluateResponseError(err);
             dispatch({
@@ -112,6 +126,8 @@ const AuthState = props => {
                 }
             });
         }
+        
+        
     }
 
     /**Función que permite obtener el usuario en sesion

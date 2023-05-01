@@ -37,29 +37,6 @@ const Navigation = () => {
 
     const toast = useToast()
 
-
-/*
-    useEffect(() => {
-        let mounted = true;
-        if (mounted && error) {
-            Alert.alert(error.title, error.body, [
-                {
-                    text: "OK",
-                    style: "cancel"
-                },
-            ]);
-        }
-        return () => {
-            mounted = false;
-        }
-    }, [error])
-*/
-
-    useEffect(() => {
-        console.log('*');
-        //getUserInSession();
-    }, []);
-
     useEffect(() => {
         if (initialMessage) {
             Alert.alert(initialMessage.title, initialMessage.body);

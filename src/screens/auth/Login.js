@@ -185,7 +185,7 @@ const Login = ({ navigation }) => {
                                             <IconButton
                                                 variant="unstyled"
                                                 icon={<CloseIcon size="3" color="coolGray.600" />}
-                                                onPress={() => handleMessage(null)}
+                                                onPress={() => console.log('hola')}
                                             />
                                         </HStack>
                                         {message !== null ? <Box

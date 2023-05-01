@@ -60,6 +60,7 @@ export default (state, action) => {
             let managements = null;
             let currentManagement = null;
 
+            /*
             let userInfo = {
                 name: data.user_data.name,
                 lastName: data.user_data.lastName,
@@ -69,32 +70,17 @@ export default (state, action) => {
                 // firstEntry: data.primer_ingreso,
                 userId: data.user_data.user_id,
             };
-
-            if (data.associations.managements.length !== 0) {
-                managements = data.associations.managements;
-            }
-
-            //si esta condicion se  cumple se deduce que el unico elemento del arreglo es corresponde 
-            // a  la misma administración que viene junto con los datos del usuario
-            if (managements === null || data.associations.managements.length === 1) {
-                currentManagement = {
-                    name: data.user_data.management_description,
-                    idManagement: data.user_data.management_id
-                }
-
-            }
+            */
 
             return {
                 ...state,
                 authenticated: true,
                 message: null,
                 loading: false,
-                userInfo,
-                managements,
-                currentManagement,
+                userInfo:null,
                 malocaInfo: {
-                    nit: data.maloca.nit ?? "",
-                    businessName: data.maloca.razon_social ?? "",
+                    nit: "",
+                    businessName:  "",
                 }
             }
         case USER_IN_SESSION:
