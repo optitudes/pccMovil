@@ -55,9 +55,7 @@ const Navigation = () => {
                     SplashScreen.hide();
                 }
             }} >
-                {/* Switch para cada rol */}
-                {authenticated ? <UserNavigation /> : <AuthStack />
-                }
+                <UserNavigation />
             </NavigationContainer >
         )
     }

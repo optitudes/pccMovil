@@ -73,7 +73,6 @@ const AuthState = props => {
         
         try {
 
-            console.log("tututuru");
             
             const res = await httpClient.post("/auth/login", formattedData);
 
@@ -98,8 +97,6 @@ const AuthState = props => {
                         
 
                     }
-
-
                     dispatch({ type: SUCCESS_LOGIN, payload: res.data.data });
                 
             } else {

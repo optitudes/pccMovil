@@ -48,19 +48,8 @@ const Login = ({ navigation }) => {
             bounces={false}
             style={{ backgroundColor: "#fff" }}
         >
-            <VStack background="#E75480">
-                {/* 
-                <HStack padding="3"
-                    justifyContent="space-between" alignItems="center"
-                    mb="1"
-                >
-                    <HStack>
-                        <Icon name="arrow-left" containerStyle={{ marginTop: 5 }} type="material-community" color="#fff" onPress={() => { navigation.goBack() }} />
+            <VStack background="#FF0000">
 
-                        <Text ml="3" fontSize="xl" fontWeight="bold" color="white">Nuevo vehículo</Text>
-                    </HStack>
-         
-                </HStack> */}
 
                 <VStack padding="3"
                     justifyContent="flex-start"
@@ -68,18 +57,8 @@ const Login = ({ navigation }) => {
                     borderTopRadius="3xl"
                     background="white"
                 >
+                    
                     <Box safeArea p="3" flex="1" >
-                        {/* <Heading
-                            size="lg"
-                            textAlign="center"
-                            fontWeight="bold"
-                            color="#E75480"
-                            _dark={{
-                                color: "warmGray.50",
-                            }}
-                        >
-                            Bienvenido a maloca
-                        </Heading> */}
                         <Box justifyContent={"center"} alignItems={"center"} mt="1">
                             <Image
                                 source={require("../../assets/img/logoLogin.png")}
@@ -89,19 +68,6 @@ const Login = ({ navigation }) => {
                             />
                         </Box>
                         <VStack space={3} mt="8">
-
-                            <Heading
-                                size="md"
-                                textAlign="center"
-                                fontWeight="semibold"
-                                color="#E75480"
-                                _dark={{
-                                    color: "warmGray.50",
-                                }}
-                                mb="3"
-                            >
-                                Inicie sesión
-                            </Heading>
                             <MATextInput
                                 variant="underlined"
                                 label="Correo electrónico"
@@ -145,20 +111,7 @@ const Login = ({ navigation }) => {
 
                                     }}
                                 />
-                                <Link
-                                    _text={{
-                                        textAlign: "center",
-                                        fontSize: "xs",
-                                        fontWeight: "500",
-                                        color: "indigo.500",
-                                    }}
 
-                                    alignSelf="center"
-                                    mt="5"
-                                    onPress={() => navigation.navigate("passwordRecovery")}
-                                >
-                                    ¿Olvidaste tu contraseña?
-                                </Link>
                             </FormControl>
 
                             <Collapse isOpen={message != null} mt="5">
@@ -201,9 +154,39 @@ const Login = ({ navigation }) => {
                                     </VStack>
                                 </Alert>
                             </Collapse>
-                            <Button mt="8" background="#E75480" isLoading={loading} borderRadius="10" onPress={() => onSubmit()}>
+                            <Button mt="8" background="#FF0000" isLoading={loading} borderRadius="10" onPress={() => onSubmit()}>
                                 Iniciar sesión
                             </Button>
+                            <Link
+                                    _text={{
+                                        textAlign: "center",
+                                        fontSize: "xs",
+                                        fontWeight: "500",
+                                        color: "indigo.500",
+                                    }}
+
+                                    alignSelf="center"
+                                    mt="5"
+                                    onPress={() => navigation.navigate("passwordRecovery")}
+                                >
+                                    ¿Olvidaste tu contraseña?
+                                </Link>
+                                
+                                <Link
+                                    _text={{
+                                        textAlign: "center",
+                                        fontSize: "xs",
+                                        fontWeight: "500",
+                                        color: "indigo.500",
+                                    }}
+
+                                    alignSelf="center"
+                                    mt="5"
+                                    onPress={() => navigation.navigate("passwordRecovery")}
+                                >
+                                    <Text style={{color: "black"}}>No tienes una cuenta? </Text>Registrarse
+                                </Link>
+                                
                         </VStack>
 
                         <VStack alignItems={"center"} mt="10">
