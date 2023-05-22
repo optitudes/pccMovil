@@ -3,6 +3,31 @@ export const formatDate = (date) => {
 
   return newDateSplit[2] + "-" + newDateSplit[1] + "-" + newDateSplit[0];
 };
+
+export const formatCreatedAt = (date) => {
+  const months = {
+    "01": "Ene",
+    "02": "Feb",
+    "03": "Mar",
+    "04": "Abr",
+    "05": "May",
+    "06": "Jun",
+    "07": "Jul",
+    "08": "Ago",
+    "09": "Sep",
+    "10": "Oct",
+    "11": "Nov",
+    "12": "Dic",
+  };
+
+  const dateParts = date.toString().split(" ")[0].split("-");
+  const day = dateParts[2];
+  const month = months[dateParts[1]];
+  const year = dateParts[0];
+
+  return `${day}/${month}/${year}`;
+};
+
 export const formatNumber = (num) => {
 
 

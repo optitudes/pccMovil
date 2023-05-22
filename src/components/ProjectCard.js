@@ -4,45 +4,47 @@ import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 
 import { Chip, Icon, Card } from "react-native-elements";
 
-import { formatDate } from "../utils/helpers";
+import { formatCreatedAt } from "../utils/helpers";
+import colors from '../constants/colors';
+
 
 /**Tarjeta de noticias que se renderiza en la screen de inicio y en la lista de noticias
  *
  * @param {*}
  * @returns
  */
-export default function NewsCard({
+export default function ProjectCard({
   item,
   horizontal = false,
 }) {
   const navigation = useNavigation();
 
-  const [itemUri, setItemUri] = useState(item.ruta_imagen ? { uri: item.ruta_imagen } : require("../assets/img/imagenPorDefecto.png"));
+  const [itemUri, setItemUri] = useState(item.banner ? { uri: item.banner } : require("../assets/img/imagenPorDefecto.png"));
 
   useEffect(() => {
     let mounted = true;
-    if (mounted && item.ruta_imagen) {
-      setItemUri(item.ruta_imagen ? { uri: item.ruta_imagen } : require("../assets/img/imagenPorDefecto.png"))
+    if (mounted && item.banner) {
+      setItemUri(item.banner ? { uri: item.banner } : require("../assets/img/imagenPorDefecto.png"))
     }
     return () => {
       mounted = false
     }
-  }, [item.ruta_imagen])
+  }, [item.banner])
 
   return !horizontal ? (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("newsDetail", { idNews: item.id_noticias });
+        navigation.navigate("projectDetails", { idProject: item.id });
       }}
       style={{
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor:  colors.SECUNDARY1,
         height: 380,
         marginHorizontal: 8,
         marginVertical: 5,
         borderWidth: 0.5,
         borderRadius: 5,
-        borderColor: "#e0e0e0",
+        borderColor: colors.SECUNDARY3,
         elevation: 1,
       }}
     >
@@ -54,7 +56,7 @@ export default function NewsCard({
           borderWidth: 0.5,
           borderTopRightRadius: 5,
           borderTopLeftRadius: 5,
-          borderColor: "#d1d1d1",
+          borderColor: colors.SECUNDARY4,
 
         }}
         style={{
@@ -63,15 +65,15 @@ export default function NewsCard({
           resizeMode: "cover",
 
         }}
-        PlaceholderContent={<ActivityIndicator size="small" color="#fff" />}
+        PlaceholderContent={<ActivityIndicator size="small" color={colors.SECUNDARY1} />}
         onError={() => { setItemUri(require("../assets/img/imagenPorDefecto.png")) }}
 
       />
       <Chip
-        title={formatDate(item.fecha_noticia)}
-        titleStyle={{ color: "#fff" }}
-        buttonStyle={{ backgroundColor: "#26b99a" }}
-        containerStyle={{ position: "absolute", top: 183, left: 10 }}
+        title={formatCreatedAt(item.created_at)}
+        titleStyle={{ color: colors.SECUNDARY1 }}
+        buttonStyle={{ backgroundColor: colors.PRIMARY1 }}
+        containerStyle={{ position: "absolute", top: 183, right: 10 }}
       />
 
       <View
@@ -94,10 +96,7 @@ export default function NewsCard({
           }}
           numberOfLines={1}
         >
-          {item.titulo_noticia}
-        </Text>
-        <Text numberOfLines={3} style={{ color: "#212121", marginTop: 15 }}>
-          {item.descripcion_noticia.replace(/<[^>]*>?/gm, "").trim()}
+          {item.name}
         </Text>
       </View>
 
@@ -112,7 +111,7 @@ export default function NewsCard({
           bottom: 0,
           paddingHorizontal: 15,
           borderTopWidth: 0.5,
-          borderColor: "#c2c2c2",
+          borderColor: colors.SECUNDARY4,
           maxHeight: 50,
         }}
       >
@@ -123,24 +122,15 @@ export default function NewsCard({
             alignItems: "center",
             height: 30,
           }}
-          onPress={() => { navigation.navigate("viewsUserList", { idNews: item.id_noticias }) }}
+          onPress={() => { navigation.navigate("viewsUserList", { idNews: item.id }) }}
         >
           <Icon
             name={"eye"}
-            color={"#ababab"}
+            color={colors.SECUNDARY4}
             size={24}
             type="material-community"
           />
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: "bold",
-              color: "#999999",
-              marginLeft: 5,
-            }}
-          >
-            {item.visualizaciones} Visualizaciones
-          </Text>
+
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -151,20 +141,10 @@ export default function NewsCard({
           }}
           onPress={() => {
 
-            navigation.navigate("newsDetail", { idNews: item.id_noticias });
+            navigation.navigate("newsDetail", { idNews: item.id });
 
           }}
         >
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: "bold",
-              color: "#999999",
-              marginLeft: 5,
-            }}
-          >
-            {item.comentarios} Comentarios
-          </Text>
         </TouchableOpacity>
       </View>
     </TouchableOpacity>
@@ -173,18 +153,18 @@ export default function NewsCard({
     <TouchableOpacity
       onPress={() => {
 
-        navigation.navigate("news", { screen: "newsDetail", params: { idNews: item.id_noticias } });
+        navigation.navigate("news", { screen: "newsDetail", params: { idNews: item.id } });
 
       }}
       style={{
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor: colors.SECUNDARY1,
         height: 390,
         // marginHorizontal: 8,
         marginVertical: 5,
         borderWidth: 0.5,
         borderRadius: 5,
-        borderColor: "#d1d1d1",
+        borderColor: colors.SECUNDARY4,
         elevation: 1,
       }}
     >
@@ -198,20 +178,20 @@ export default function NewsCard({
 
         }}
         style={{ flex: 1, resizeMode: "cover", height: "100%" }}
-        PlaceholderContent={<ActivityIndicator size="small" color="#26b99a" />}
+        PlaceholderContent={<ActivityIndicator size="small" color={colors.PRIMARY1} />}
         onError={() => { setItemUri(require("../assets/img/imagenPorDefecto.png")) }}
       />
 
       <Chip
-          title={formatDate(item.fecha_noticia)}
-        titleStyle={{ color: "#fff" }}
-        buttonStyle={{ backgroundColor: "#26b99a", opacity: 0.9 }}
-        containerStyle={{ position: "absolute", top: 135, left: 10, zIndex: 1 }}
+          title={formatCreatedAt(item.created_at)}
+        titleStyle={{ color: colors.SECUNDARY1 }}
+        buttonStyle={{ backgroundColor: colors.PRIMARY1, opacity: 0.9 }}
+        containerStyle={{ position: "absolute", top: 135, right: 10, zIndex: 1 }}
       />
       <View
         style={{
           position: "absolute",
-          backgroundColor: "#fff",
+          backgroundColor: colors.SECUNDARY1,
           left: 0,
           bottom: 0,
           height: 125,
@@ -239,10 +219,7 @@ export default function NewsCard({
             }}
             numberOfLines={1}
           >
-            {item.titulo_noticia}
-          </Text>
-          <Text numberOfLines={2} style={{ color: "#000", marginTop: 10 }}>
-            {item.descripcion_noticia.replace(/<[^>]*>?/gm, "").trim()}
+            {item.name}
           </Text>
           <View
             style={{ flexDirection: "row", marginVertical: 5, width: "100%" }}
@@ -251,7 +228,7 @@ export default function NewsCard({
               style={{
                 fontSize: 15,
                 fontWeight: "bold",
-                color: "#999999",
+                color: colors.TERCIARY1,
                 width: "100%",
               }}
             >

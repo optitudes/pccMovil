@@ -9,7 +9,7 @@ import colors from '../../constants/colors';
 import ImageViewer from '../screens/ImageViewer';
 
 import StartStack from './StartStack';
-import VideoStack from './VideoStack';
+import ProfileStack from './ProfileStack';
 import ProjectStack from './ProjectStack';
 import PodcastStack from './PodcastStack';
 
@@ -63,7 +63,7 @@ const HomeTabs = () => {
             })}
         >
             <Tab.Screen name="startStack" component={StartStack} />
-            <Tab.Screen name="videoStack" component={ VideoStack} />
+            <Tab.Screen name="profileStack" component={ ProfileStack} />
             <Tab.Screen name="projectStack" component={ ProjectStack} />
             <Tab.Screen name="podcastStack" component={PodcastStack} />
         </Tab.Navigator>
@@ -75,12 +75,12 @@ function ScreenOptions(route, color) {
 
     switch (route.name) {
         case "startStack":
-            iconName = "view-dashboard";
+            iconName = "home";
             break;
         case "videoStack":
             iconName = "video-box";
             break;
-        case "profile":
+        case "profileStack":
             iconName = "account-outline";
             break;
         case "projectStack":
@@ -110,7 +110,7 @@ function UserTitle(route, color) {
         case "videoStack":
             name = "Videos";
             break;
-        case "profile":
+        case "profileStack":
             name = "Perfil";
             break;
         case "projectStack":

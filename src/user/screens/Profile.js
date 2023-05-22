@@ -1,20 +1,20 @@
 import { useNavigation } from '@react-navigation/core';
-import { Box, Pressable, Text, ScrollView, HStack, VStack } from 'native-base';
+import { Box, Pressable, Text, ScrollView, HStack, VStack, useDisclose, Actionsheet, Avatar, Divider } from 'native-base';
 import React, { useContext, useState, useEffect } from 'react';
-import { SafeAreaView} from "react-native";
+import {  SafeAreaView, TouchableHighlight, TouchableNativeFeedback, TouchableOpacity } from "react-native";
+import { FAB } from 'react-native-elements';
 import { Icon } from 'react-native-elements/dist/icons/Icon';
 import NotificationsBell from '../../components/NotificationsBell';
 import authContext from '../../context/authContext';
 
-
-
 import colors from '../../constants/colors';
-import LastProjects from '../../components/LastProjects';
-import LastVideos from '../../components/LastVideos';
-
-
 
 let directAccess = [
+    {
+        label: "Noticias",
+        navigateTo: "news",
+        iconName: "newspaper-variant-outline"
+    },
     {
         label: "Proyectos",
         navigateTo: "projects",
@@ -37,9 +37,7 @@ let directAccess = [
     },
 ]
 
-const Start = ({ navigation }) => {
-    const [projects, setProjects] = useState([]);
-
+const Profile = ({ navigation }) => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -76,16 +74,21 @@ const Start = ({ navigation }) => {
 
                             ))}
                         </Box>
-                        <LastProjects />
-                        <LastVideos />
-
-
                     </VStack>
 
                 </VStack>
 
 
             </ScrollView>
+            <FAB
+                onPress={() => navigation.navigate("contact")}
+                icon={{ name: "face-agent", type: "material-community", color: colors.SECUNDARY1 }}
+                style={{ padding: 0 }}
+                background={TouchableNativeFeedback.Ripple(colors.SECUNDARY2, false)}
+
+                buttonStyle={{ flexDirection: "column", width: 70, paddingVertical: 14, margin: 0, borderRadius: 25 }}
+                containerStyle={{ position: "absolute", bottom: 25, right: 25, flexDirection: "column", padding: 0, borderRadius: 25 }}
+            />
         </SafeAreaView >
     )
 }
@@ -139,4 +142,5 @@ const CardDirectAccess = ({ item }) => {
 
     )
 }
-export default Start;
+
+export default Profile;
