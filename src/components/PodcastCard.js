@@ -13,7 +13,7 @@ import colors from '../constants/colors';
  * @param {*}
  * @returns
  */
-export default function VideoCard({
+export default function PodcastCard({
   item,
   horizontal = false,
 }) {

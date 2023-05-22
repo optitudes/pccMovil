@@ -13,23 +13,23 @@ import colors from '../constants/colors';
  * @param {*}
  * @returns
  */
-export default function VideoCard({
+export default function PictureCard({
   item,
   horizontal = false,
 }) {
   const navigation = useNavigation();
 
-  const [itemUri, setItemUri] = useState(item.banner ? { uri: item.banner } : require("../assets/img/imagenPorDefecto.png"));
+  const [itemUri, setItemUri] = useState(item.link ? { uri: item.link } : require("../assets/img/imagenPorDefecto.png"));
 
   useEffect(() => {
     let mounted = true;
-    if (mounted && item.banner) {
-      setItemUri(item.banner ? { uri: item.banner } : require("../assets/img/imagenPorDefecto.png"))
+    if (mounted && item.link) {
+      setItemUri(item.link ? { uri: item.link } : require("../assets/img/imagenPorDefecto.png"))
     }
     return () => {
       mounted = false
     }
-  }, [item.banner])
+  }, [item.link])
 
   return !horizontal ? (
     <TouchableOpacity

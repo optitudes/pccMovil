@@ -11,6 +11,11 @@ import authContext from '../../context/authContext';
 import colors from '../../constants/colors';
 import LastProjects from '../../components/LastProjects';
 import LastVideos from '../../components/LastVideos';
+import LastPictures from '../../components/LastPictures';
+import LastPodcast from '../../components/LastPodcast';
+
+
+
 
 
 
@@ -78,6 +83,9 @@ const Start = ({ navigation }) => {
                         </Box>
                         <LastProjects />
                         <LastVideos />
+                        <LastPictures />
+                        <LastPodcast />
+
 
 
                     </VStack>
