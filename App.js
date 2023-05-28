@@ -18,6 +18,7 @@ import {
 import AuthState from './src/context/authState';
 import Navigation from './src/navigations/Navigation';
 import { NativeBaseProvider } from 'native-base';
+import colors from './src/constants/colors';
 
 const App = () => {
   return (
@@ -26,16 +27,16 @@ const App = () => {
             <NativeBaseProvider>
               {Platform.OS === "android" ? <StatusBar
                 animated={true}
-                backgroundColor="#FF0000"
+                backgroundColor={colors.PRIMARY1}
               /> : <View
 
-                style={{ backgroundColor: "#FF0000", height: 100, width: "100%", position: "absolute" }}
+                style={{ backgroundColor: colors.PRIMARY1, height: 100, width: "100%", position: "absolute" }}
               >
                 <StatusBar
                   animated={true}
                   translucent={true}
                   barStyle="light-content"
-                  backgroundColor="#FF0000"
+                  backgroundColor={colors.PRIMARY1}
                 />
                 
               </View>

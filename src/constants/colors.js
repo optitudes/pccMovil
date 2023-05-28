@@ -3,9 +3,9 @@
 
 
 const colors = {
-    PRIMARY1 : "#FF0000",
-    PRIMARY2 : "#ff7b5a",
-    PRIMARY3 : "#ffdfd4",
+    PRIMARY1 : "#009688",
+    PRIMARY2 : "#55a27a",
+    PRIMARY3 : "#a7d3b3",
 
     SECUNDARY1 : "#fff",
     SECUNDARY2 : "#fefefe",
@@ -16,6 +16,8 @@ const colors = {
     SECUNDARY6 : "#808080",
 
     TERCIARY1 : "#000000",
+
+    APPROVED1: "#009688",
+    
   };
-  
   export default colors; 

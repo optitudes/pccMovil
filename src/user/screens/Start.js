@@ -22,29 +22,27 @@ import LastPodcast from '../../components/LastPodcast';
 let directAccess = [
     {
         label: "Proyectos",
-        navigateTo: "projects",
+        navigateTo: "searchProject",
         iconName: "microscope"
     },
     {
         label: "Videos",
-        navigateTo: "videos",
+        navigateTo: "searchVideo",
         iconName: "video-box"
     },
     {
         label: "Podcasts",
-        navigateTo: "podcasts",
+        navigateTo: "searchPodcast",
         iconName: "account-voice"
     },
     {
         label: "Imagenes",
-        navigateTo: "images",
+        navigateTo: "searchPicture",
         iconName: "image-area"
     },
 ]
 
 const Start = ({ navigation }) => {
-    const [projects, setProjects] = useState([]);
-
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -85,9 +83,6 @@ const Start = ({ navigation }) => {
                         <LastVideos />
                         <LastPictures />
                         <LastPodcast />
-
-
-
                     </VStack>
 
                 </VStack>
@@ -106,7 +101,7 @@ const UserInfoHeader = () => {
             justifyContent="space-between" alignItems="center"
             mb="1"
         >
-            <Text fontSize="xl" fontWeight="bold" color="white">Hola! Juan</Text>
+            <Text fontSize="xl" fontWeight="bold" color="white">Hola!</Text>
             <NotificationsBell />
         </HStack>)
 

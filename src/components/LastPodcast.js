@@ -36,7 +36,6 @@ const LastPodcast = () => {
         const recentlyPosted = async () => {
             try {
                 const res = await httpClient.get("/podcast/recentlyPosted");
-                console.log(res.data);
                 let projectsObtained = res.data??[];
                 setProjectList({...projectsObtained, loading: false});
             } catch (error) {
@@ -89,7 +88,7 @@ const LastPodcast = () => {
         />
 
             <TouchableOpacity
-                onPress={() => navigation.navigate("news")}
+                onPress={() => navigation.navigate("searchPodcast")}
                 style={{
                     backgroundColor: colors.PRIMARY1,
                     borderRadius: 16,

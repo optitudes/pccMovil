@@ -58,11 +58,7 @@ const AuthState = props => {
      * @param {*} password 
      */
     const login = async (email, password) => {
-        console.log("tututuru");
-        console.log(email);
-        console.log(password);
 
-        
         
         dispatch({ type: LOADING, payload: true });
 
@@ -77,25 +73,16 @@ const AuthState = props => {
             const res = await httpClient.post("/auth/login", formattedData);
 
             if (res.data.success) {
-                console.log("done");
-                console.log(res.data.data );
                 
                 let userData = res.data.data;
-                console.log(userData);
-                console.log(userData.name);
-                console.log(userData.token);
-                
                     authToken(userData.token);
                     await EncryptedStorage.setItem("userToken", userData.token);
 
                     try{
                         let token = await EncryptedStorage.getItem("userToken");
-                        console.log(token);
 
                     }catch(err){
                         console.log("error al cargar token");
-                        
-
                     }
                     dispatch({ type: SUCCESS_LOGIN, payload: res.data.data });
                 
@@ -174,7 +161,6 @@ const AuthState = props => {
             });
         }
         */
-       console.log("si hay papa");
     }
 
     /**Funcion que permite al usuario cerrar sesion
@@ -204,7 +190,7 @@ const AuthState = props => {
             });
         }
         */
-       console.log("no hay papa");
+       console.log("...");
     }
 
     /**Función que permite mostrar/ocultar las alertas desde algun componente consumidor

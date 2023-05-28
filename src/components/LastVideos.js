@@ -36,7 +36,6 @@ const LastVideos = () => {
         const recentlyPosted = async () => {
             try {
                 const res = await httpClient.get("/video/recentlyPosted");
-                console.log(res.data);
                 let projectsObtained = res.data??[];
                 setProjectList({...projectsObtained, loading: false});
             } catch (error) {
@@ -89,7 +88,7 @@ const LastVideos = () => {
         />
 
             <TouchableOpacity
-                onPress={() => navigation.navigate("news")}
+                onPress={() => navigation.navigate("searchVideo")}
                 style={{
                     backgroundColor: colors.PRIMARY1,
                     borderRadius: 16,

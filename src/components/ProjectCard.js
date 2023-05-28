@@ -79,12 +79,12 @@ export default function ProjectCard({
       <View
         style={{
           flex: 1,
-          paddingHorizontal: 15,
+          paddingHorizontal: 7,
           justifyContent: "center",
           marginTop: 15,
           borderBottomLeftRadius: 5,
           borderBottomRightRadius: 5,
-          paddingVertical: 15,
+          paddingVertical: 7,
         }}
       >
         <Text
@@ -98,54 +98,6 @@ export default function ProjectCard({
         >
           {item.name}
         </Text>
-      </View>
-
-      <View
-        style={{
-          flexDirection: "row",
-          flex: 1,
-          marginTop: 5,
-          width: "100%",
-          justifyContent: "space-between",
-          alignItems: "center",
-          bottom: 0,
-          paddingHorizontal: 15,
-          borderTopWidth: 0.5,
-          borderColor: colors.SECUNDARY4,
-          maxHeight: 50,
-        }}
-      >
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-            height: 30,
-          }}
-          onPress={() => { navigation.navigate("viewsUserList", { idNews: item.id }) }}
-        >
-          <Icon
-            name={"eye"}
-            color={colors.SECUNDARY4}
-            size={24}
-            type="material-community"
-          />
-
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-            height: 30,
-          }}
-          onPress={() => {
-
-            navigation.navigate("newsDetail", { idNews: item.id });
-
-          }}
-        >
-        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   ) : (
@@ -220,6 +172,17 @@ export default function ProjectCard({
             numberOfLines={1}
           >
             {item.name}
+
+          </Text>
+          <Text
+            style={{
+              fontSize: 14,
+              fontWeight: "normal",
+              textTransform: "capitalize",
+            }}
+            numberOfLines={4}
+          >
+          {item.description??""}
           </Text>
           <View
             style={{ flexDirection: "row", marginVertical: 5, width: "100%" }}

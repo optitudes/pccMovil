@@ -2,7 +2,10 @@ import React from "react";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Start from "../screens/Start";
-
+import SearchProject from "../screens/project/SearchProject";
+import SearchPicture from "../screens/picture/SearchPicture";
+import SearchVideo from "../screens/video/SearchVideo"
+import SearchPodcast from "../screens/podcast/SearchPodcast";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +27,22 @@ export default function StartStack() {
             <Stack.Screen
                 name="start"
                 component={Start}
+            />
+            <Stack.Screen
+                name="searchProject"
+                component={SearchProject}
+            />
+            <Stack.Screen
+                name="searchPicture"
+                component={SearchPicture}
+            />
+            <Stack.Screen
+                name="searchVideo"
+                component={SearchVideo}
+            />
+            <Stack.Screen
+                name="searchPodcast"
+                component={SearchPodcast}
             />
 
         </Stack.Navigator>

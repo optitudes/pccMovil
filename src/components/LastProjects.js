@@ -37,7 +37,6 @@ const LastProjects = () => {
         const recentlyPosted = async () => {
             try {
                 const res = await httpClient.get("/project/recentlyPosted");
-                console.log(res.data);
                 let projectsObtained = res.data??[];
                 setProjectList({...projectsObtained, loading: false});
             } catch (error) {
@@ -90,7 +89,7 @@ const LastProjects = () => {
         />
 
             <TouchableOpacity
-                onPress={() => navigation.navigate("news")}
+                onPress={() => navigation.navigate("searchProject")}
                 style={{
                     backgroundColor: colors.PRIMARY1,
                     borderRadius: 16,

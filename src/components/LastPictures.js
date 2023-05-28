@@ -36,7 +36,6 @@ const LastPictures = () => {
         const recentlyPosted = async () => {
             try {
                 const res = await httpClient.get("/picture/recentlyPosted");
-                console.log(res.data);
                 let projectsObtained = res.data??[];
                 setProjectList({...projectsObtained, loading: false});
             } catch (error) {
@@ -89,7 +88,7 @@ const LastPictures = () => {
         />
 
             <TouchableOpacity
-                onPress={() => navigation.navigate("news")}
+                onPress={() => navigation.navigate("searchPicture")}
                 style={{
                     backgroundColor: colors.PRIMARY1,
                     borderRadius: 16,

@@ -1,7 +1,7 @@
 import React from "react";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Project from "../screens/Project";
+import SearchProject from "../screens/project/SearchProject";
 
 
 const Stack = createNativeStackNavigator();
@@ -22,8 +22,8 @@ export default function VideoStack() {
             }}
         >
             <Stack.Screen
-                name="project"
-                component={Project}
+                name="searchProject"
+                component={SearchProject}
             />
 
         </Stack.Navigator>

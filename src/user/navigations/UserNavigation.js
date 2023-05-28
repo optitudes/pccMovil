@@ -64,8 +64,6 @@ const HomeTabs = () => {
         >
             <Tab.Screen name="startStack" component={StartStack} />
             <Tab.Screen name="profileStack" component={ ProfileStack} />
-            <Tab.Screen name="projectStack" component={ ProjectStack} />
-            <Tab.Screen name="podcastStack" component={PodcastStack} />
         </Tab.Navigator>
     )
 }
