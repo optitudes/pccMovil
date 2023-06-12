@@ -7,6 +7,9 @@ import SearchPicture from "../screens/picture/SearchPicture";
 import SearchVideo from "../screens/video/SearchVideo"
 import SearchPodcast from "../screens/podcast/SearchPodcast";
 
+
+import videoDetail from "../screens/video/VideoDetail"
+
 const Stack = createNativeStackNavigator();
 
 /** Exporta la pila de pilas de los diferentes módulos de la aplicacion,
@@ -44,6 +47,11 @@ export default function StartStack() {
                 name="searchPodcast"
                 component={SearchPodcast}
             />
+            <Stack.Screen
+                name="videoDetail"
+                component={videoDetail}
+            />
+            
 
         </Stack.Navigator>
     );

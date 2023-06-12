@@ -176,7 +176,9 @@ export default function VideoCard({
     <TouchableOpacity
       onPress={() => {
 
-        navigation.navigate("news", { screen: "newsDetail", params: { idNews: item.id } });
+            navigation.navigate("videoDetail", { idVideo: item.id });
+
+        //navigation.navigate("news", { screen: "newsDetail", params: { idNews: item.id } });
 
       }}
       style={{
