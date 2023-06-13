@@ -164,7 +164,7 @@ export default function PodcastCard({
           }}
           onPress={() => {
 
-            navigation.navigate("newsDetail", { idNews: item.id });
+            navigation.navigate("podcastDetail", { idPodcast: item.id });
 
           }}
         >
@@ -176,7 +176,7 @@ export default function PodcastCard({
     <TouchableOpacity
       onPress={() => {
 
-        navigation.navigate("news", { screen: "newsDetail", params: { idNews: item.id } });
+            navigation.navigate("podcastDetail", { idPodcast: item.id });
 
       }}
       style={{

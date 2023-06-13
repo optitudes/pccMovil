@@ -10,6 +10,7 @@ import SearchPodcast from "../screens/podcast/SearchPodcast";
 
 import VideoDetail from "../screens/video/VideoDetail"
 import PictureDetail from "../screens/picture/PictureDetail"
+import PodcastDetail from "../screens/podcast/PodcastDetail"
 
 
 const Stack = createNativeStackNavigator();
@@ -57,6 +58,10 @@ export default function StartStack() {
                 name="pictureDetail"
                 component={PictureDetail}
             /> 
+             <Stack.Screen
+                name="podcastDetail"
+                component={PodcastDetail}
+            />
 
         </Stack.Navigator>
     );
