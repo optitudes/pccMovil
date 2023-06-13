@@ -11,6 +11,7 @@ import SearchPodcast from "../screens/podcast/SearchPodcast";
 import VideoDetail from "../screens/video/VideoDetail"
 import PictureDetail from "../screens/picture/PictureDetail"
 import PodcastDetail from "../screens/podcast/PodcastDetail"
+import ProjectDetail from "../screens/project/ProjectDetail"
 
 
 const Stack = createNativeStackNavigator();
@@ -62,6 +63,11 @@ export default function StartStack() {
                 name="podcastDetail"
                 component={PodcastDetail}
             />
+            <Stack.Screen
+                name="projectDetail"
+                component={ProjectDetail}
+            />
+
 
         </Stack.Navigator>
     );

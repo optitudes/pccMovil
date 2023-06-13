@@ -13,7 +13,9 @@ import PictureCard from './PictureCard';
 import colors from '../constants/colors';
 
 
-const LastPictures = () => {
+const LastPictures = (props) => {
+
+    const { sourceUrl, title } = props;
 
     const isFocused = useIsFocused()
     const carouselRef = React.createRef();
@@ -35,7 +37,7 @@ const LastPictures = () => {
     useEffect(() => {
         const recentlyPosted = async () => {
             try {
-                const res = await httpClient.get("/picture/recentlyPosted");
+                const res = await httpClient.get("/picture/"+sourceUrl);
                 let projectsObtained = res.data??[];
                 setProjectList({...projectsObtained, loading: false});
             } catch (error) {
@@ -56,7 +58,7 @@ const LastPictures = () => {
         background={colors.SECUNDARY23}
         alignItems="center"
     >
-            <Text fontSize={"xl"} color={colors.SECUNDARY5} fontWeight={"semibold"} >Imagenes más recientes</Text>
+            <Text fontSize={"xl"} color={colors.SECUNDARY5} fontWeight={"semibold"} >{title}</Text>
 
         <Divider />
         <Carousel

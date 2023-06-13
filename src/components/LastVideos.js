@@ -13,8 +13,9 @@ import VideoCard from './VideoCard';
 import colors from '../constants/colors';
 
 
-const LastVideos = () => {
+const LastVideos = (props) => {
 
+    const { sourceUrl, title } = props;
     const isFocused = useIsFocused()
     const carouselRef = React.createRef();
     const [projectList, setProjectList] = useState({
@@ -35,7 +36,7 @@ const LastVideos = () => {
     useEffect(() => {
         const recentlyPosted = async () => {
             try {
-                const res = await httpClient.get("/video/recentlyPosted");
+                const res = await httpClient.get("/video/"+sourceUrl);
                 let projectsObtained = res.data??[];
                 setProjectList({...projectsObtained, loading: false});
             } catch (error) {
@@ -56,7 +57,7 @@ const LastVideos = () => {
         background={colors.SECUNDARY23}
         alignItems="center"
     >
-            <Text fontSize={"xl"} color={colors.SECUNDARY5} fontWeight={"semibold"} >Videos más recientes</Text>
+            <Text fontSize={"xl"} color={colors.SECUNDARY5} fontWeight={"semibold"} >{title}</Text>
 
         <Divider />
         <Carousel

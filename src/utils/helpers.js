@@ -23,7 +23,7 @@ export const formatCreatedAt = (date) => {
     };
 
     const dateParts = date.toString().split(" ")[0].split("-");
-    const day = dateParts[2];
+    const day = dateParts[2].substring(0, 2);
     const month = months[dateParts[1]];
     const year = dateParts[0];
 

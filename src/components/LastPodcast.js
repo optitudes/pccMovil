@@ -13,8 +13,10 @@ import PodcastCard from './PodcastCard';
 import colors from '../constants/colors';
 
 
-const LastPodcast = () => {
+const LastPodcast = (props) => {
 
+
+    const { sourceUrl, title } = props;
     const isFocused = useIsFocused()
     const carouselRef = React.createRef();
     const [projectList, setProjectList] = useState({
@@ -35,7 +37,7 @@ const LastPodcast = () => {
     useEffect(() => {
         const recentlyPosted = async () => {
             try {
-                const res = await httpClient.get("/podcast/recentlyPosted");
+                const res = await httpClient.get("/podcast/"+sourceUrl);
                 let projectsObtained = res.data??[];
                 setProjectList({...projectsObtained, loading: false});
             } catch (error) {
@@ -56,7 +58,7 @@ const LastPodcast = () => {
         background={colors.SECUNDARY23}
         alignItems="center"
     >
-            <Text fontSize={"xl"} color={colors.SECUNDARY5} fontWeight={"semibold"} >Podcasts más recientes</Text>
+            <Text fontSize={"xl"} color={colors.SECUNDARY5} fontWeight={"semibold"} >{title}</Text>
 
         <Divider />
         <Carousel

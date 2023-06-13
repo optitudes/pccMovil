@@ -34,7 +34,7 @@ export default function ProjectCard({
   return !horizontal ? (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("projectDetails", { idProject: item.id });
+        navigation.navigate("projectDetail", { idProject: item.id });
       }}
       style={{
         flex: 1,
@@ -104,9 +104,7 @@ export default function ProjectCard({
     // tarjeta renderizada en la pantalla de inicio
     <TouchableOpacity
       onPress={() => {
-
-        navigation.navigate("news", { screen: "newsDetail", params: { idNews: item.id } });
-
+        navigation.navigate("projectDetail", { idProject: item.id });
       }}
       style={{
         flex: 1,
