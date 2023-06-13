@@ -8,7 +8,9 @@ import SearchVideo from "../screens/video/SearchVideo"
 import SearchPodcast from "../screens/podcast/SearchPodcast";
 
 
-import videoDetail from "../screens/video/VideoDetail"
+import VideoDetail from "../screens/video/VideoDetail"
+import PictureDetail from "../screens/picture/PictureDetail"
+
 
 const Stack = createNativeStackNavigator();
 
@@ -49,9 +51,12 @@ export default function StartStack() {
             />
             <Stack.Screen
                 name="videoDetail"
-                component={videoDetail}
+                component={VideoDetail}
             />
-            
+             <Stack.Screen
+                name="pictureDetail"
+                component={PictureDetail}
+            /> 
 
         </Stack.Navigator>
     );

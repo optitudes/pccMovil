@@ -164,7 +164,6 @@ export default function PictureCard({
           }}
           onPress={() => {
 
-            navigation.navigate("newsDetail", { idNews: item.id });
 
           }}
         >
@@ -176,7 +175,7 @@ export default function PictureCard({
     <TouchableOpacity
       onPress={() => {
 
-        navigation.navigate("news", { screen: "newsDetail", params: { idNews: item.id } });
+            navigation.navigate("pictureDetail", { idPicture: item.id });
 
       }}
       style={{
