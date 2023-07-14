@@ -169,7 +169,7 @@ const Login = ({ navigation }) => {
 
                                     alignSelf="center"
                                     mt="5"
-                                    onPress={() => navigation.navigate("passwordRecovery")}
+                                    onPress={() => /*navigation.navigate("login")*/console.log("hola")}
                                 >
                                     ¿Olvidaste tu contraseña?
                                 </Link>
@@ -184,7 +184,7 @@ const Login = ({ navigation }) => {
 
                                     alignSelf="center"
                                     mt="5"
-                                    onPress={() => navigation.navigate("passwordRecovery")}
+                                onPress={() => /*navigation.navigate("passwordRecovery")*/console.log("hola")}
                                 >
                                     <Text style={{color: "black"}}>No tienes una cuenta? </Text>Registrarse
                                 </Link>
