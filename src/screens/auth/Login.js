@@ -6,6 +6,7 @@ import MATextInput from '../../components/MATextInput';
 //import { Icon } from 'react-native-elements';
 import { Icon } from 'react-native-elements/dist/icons/Icon';
 
+import colors from "../../constants/colors";
 //import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Image, KeyboardAvoidingView, Linking, Platform } from 'react-native';
@@ -43,12 +44,13 @@ const Login = ({ navigation }) => {
         <ScrollView
             _contentContainerStyle={{
                 minW: "72",
-                backgroundColor: "#fff"
+                backgroundColor: colors.SECUNDARY1 
             }}
+
             bounces={false}
-            style={{ backgroundColor: "#fff" }}
+            style={{ backgroundColor: colors.SECUNDARY1 }}
         >
-            <VStack background="#FF0000">
+            <VStack background={colors.PRIMARY1}>
 
 
                 <VStack padding="3"
@@ -154,7 +156,7 @@ const Login = ({ navigation }) => {
                                     </VStack>
                                 </Alert>
                             </Collapse>
-                            <Button mt="8" background="#FF0000" isLoading={loading} borderRadius="10" onPress={() => onSubmit()}>
+                            <Button mt="8" background={colors.PRIMARY1} isLoading={loading} borderRadius="10" onPress={() => onSubmit()}>
                                 Iniciar sesión
                             </Button>
                             <Link
@@ -195,7 +197,7 @@ const Login = ({ navigation }) => {
                                 <Text
                                     onPress={() => {
                                         Linking.openURL(
-                                            `https://maloca.co/main/tratamiento_datos`
+                                            `https://pcc.co/main/tratamiento_datos`
                                         );
                                     }}
                                     style={{ textDecorationLine: "underline", color: "gray" }}
@@ -209,7 +211,7 @@ const Login = ({ navigation }) => {
                                 <Text
                                     onPress={() => {
                                         Linking.openURL(
-                                            `https://maloca.co//main/terminos_servicio`
+                                            `https://pcc.co//main/terminos_servicio`
                                         );
                                     }}
                                     style={{ textDecorationLine: "underline", color: "gray" }}
