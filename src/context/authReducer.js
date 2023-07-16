@@ -56,9 +56,16 @@ export default (state, action) => {
 
         case SUCCESS_LOGIN:
 
-            let data = action.payload;
-            let managements = null;
-            let currentManagement = null;
+        //esta secccion se puede usar para hacer filtrados y validaciones a
+        //la informaicon del usuario antes de guardarla en el provider
+            let userInfo = action.payload.userInfo;
+            return {
+                ...state,
+                authenticated: true,
+                message: null,
+                loading: false,
+                ["userInfo"]: userInfo,
+            }
 
             /*
             let userInfo = {
@@ -70,8 +77,6 @@ export default (state, action) => {
                 // firstEntry: data.primer_ingreso,
                 userId: data.user_data.user_id,
             };
-            */
-
             return {
                 ...state,
                 authenticated: true,
@@ -83,6 +88,8 @@ export default (state, action) => {
                     businessName:  "",
                 }
             }
+            */
+
         case USER_IN_SESSION:
 
             let myData = action.payload;

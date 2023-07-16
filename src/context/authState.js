@@ -45,7 +45,8 @@ const AuthState = props => {
         loading: false,
         initialLoading: true,
         initialMessage: null,
-        userInfo: null,
+        userInfo: null
+        ,
     }
 
     //crea el dispatch y el state
@@ -76,15 +77,13 @@ const AuthState = props => {
                 
                 let userData = res.data.data;
                     authToken(userData.token);
-                    await EncryptedStorage.setItem("userToken", userData.token);
 
                     try{
-                        let token = await EncryptedStorage.getItem("userToken");
-
+                        await EncryptedStorage.setItem("userToken", userData.token);
                     }catch(err){
                         console.log("error al cargar token");
                     }
-                    dispatch({ type: SUCCESS_LOGIN, payload: res.data.data });
+                    dispatch({ type: SUCCESS_LOGIN, payload: userData });
                 
             } else {
                 await EncryptedStorage.clear();
