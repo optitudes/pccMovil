@@ -166,7 +166,6 @@ const AuthState = props => {
      * 
      */
     const logout = async () => {
-        /*
 
         dispatch({ type: LOADING, payload: true });
         try {
@@ -188,7 +187,6 @@ const AuthState = props => {
                 }
             });
         }
-        */
        console.log("...");
     }
 

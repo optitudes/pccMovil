@@ -11,7 +11,7 @@ import { Icon, Card, Avatar, Button, FAB, ListItem } from "react-native-elements
 
 
 const Profile = ({ navigation }) => {
-const { authenticated, userInfo} = useContext(authContext);
+const { authenticated, userInfo,logout} = useContext(authContext);
 const [selectedParticipant, setSelectedParticipant] = useState(null);
 
 
@@ -40,7 +40,6 @@ const [selectedParticipant, setSelectedParticipant] = useState(null);
                 <Text ></Text>
                 <Text ></Text>
                 <Text ></Text>
-
                     <View><Text>Roles permitidos a esta cuenta</Text></View>
                 <Text ></Text>
                 <Text ></Text>
@@ -62,6 +61,17 @@ const [selectedParticipant, setSelectedParticipant] = useState(null);
                       </View>
                     ))}
                 </ScrollView > 
+                <Text ></Text>
+                <Text ></Text>
+                <Text ></Text>
+                <Text ></Text>
+                     <TouchableHighlight
+                        style={styles.logoutBtn}
+                        onPress={() => logout()}
+                        underlayColor="#DDDDDD"
+                        >
+                        <Text style={styles.logoutBtnText}>logout</Text>
+                        </TouchableHighlight>
 
                 <Modal
                     visible={selectedParticipant !== null}
@@ -94,6 +104,16 @@ const [selectedParticipant, setSelectedParticipant] = useState(null);
 
 export default Profile;
 const styles = {
+      logoutBtnText:{
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
+      logoutBtn:{
+        backgroundColor: '#ee7f7f',
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+      },
       cardContainer: {
         backgroundColor: colors.PRIMARY3,
         padding: 10,
