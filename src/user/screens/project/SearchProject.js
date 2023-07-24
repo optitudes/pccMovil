@@ -2,7 +2,7 @@
 // https://aboutreact.com/react-native-search-bar-filter-on-listview/
 
 // import React in our code
-import React, { useState, useEffect } from 'react';
+import React, { useState,useContext, useEffect } from 'react';
 import { TouchableOpacity } from 'react-native';
 import {  Icon } from "react-native-elements";
 
@@ -19,11 +19,13 @@ import ProjectCard from '../../../components/ProjectCard';
 import httpClient from '../../../config/httpClient';
 import colors from '../../../constants/colors';
 import LoadingSpinner from '../../../components/LoadingSpinner';
+import authContext from '../../../context/authContext';
 
 import { isNotStringEmpty } from "../../../utils/helpers";
 
 
 const SearchProject = ({ navigation }) => {
+    const { authenticated, userInfo} = useContext(authContext);
     const [searchWord, setSearchWord] = useState('');
     const [nextPage, setNextPage] = useState('');
     const [prevPage, setPrevPage] = useState('');
@@ -132,6 +134,16 @@ const SearchProject = ({ navigation }) => {
               ItemSeparatorComponent={ItemSeparatorView}
               renderItem={renderItem}
             />
+            {authenticated && userInfo.userType.levelAccess == 0  && (
+            <TouchableOpacity style={styles.floatingButton} onPress={() => console.log("hola")}>
+               <Icon
+                name={"plus"}
+                color={colors.SECUNDARY1}
+                size={24}
+                type="material-community"
+              />
+            </TouchableOpacity>)}
+
             <View style={styles.navigationContainer}>
             {isNotStringEmpty(prevPage) && (
             <TouchableOpacity onPress={() => searchByLink(prevPage)}>
@@ -204,6 +216,18 @@ const styles = StyleSheet.create({
         height: 150,
         borderWidth: 1,
         borderRadius: 8,
+      },
+
+      floatingButton: {
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
+        backgroundColor: colors.CUATERNARY1,
+        borderRadius: 30,
+        width: 60,
+        height: 60,
+        justifyContent: 'center',
+        alignItems: 'center',
       },
   });
 export default SearchProject;

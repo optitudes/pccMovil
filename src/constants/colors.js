@@ -17,6 +17,9 @@ const colors = {
 
     TERCIARY1 : "#000000",
 
+
+    CUATERNARY1 : "#3b83bd",
+
     APPROVED1: "#009688",
     
   };
