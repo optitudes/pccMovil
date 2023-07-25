@@ -134,6 +134,7 @@ const SearchProject = ({ navigation }) => {
               ItemSeparatorComponent={ItemSeparatorView}
               renderItem={renderItem}
             />
+            {authenticated && userInfo.userType.levelAccess == 0  && (
             <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate("projectForm",{action:"create",projectId:-1})}>
                <Icon
                 name={"plus"}
@@ -141,7 +142,7 @@ const SearchProject = ({ navigation }) => {
                 size={24}
                 type="material-community"
               />
-            </TouchableOpacity>
+            </TouchableOpacity>)}
 
             <View style={styles.navigationContainer}>
             {isNotStringEmpty(prevPage) && (
