@@ -3,7 +3,6 @@
 
 // import React in our code
 import React, { useState,useContext, useEffect } from 'react';
-import { TouchableOpacity } from 'react-native';
 import {  Icon } from "react-native-elements";
 import Toast from 'react-native-toast-message';
 
@@ -13,9 +12,10 @@ import {
   Text,
   StyleSheet,
   View,
-  FlatList,
+  ScrollView,
   TextInput,
     Image,
+    TouchableOpacity,
  Button,
 } from 'react-native';
 import ProjectCard from '../../../components/ProjectCard';
@@ -38,11 +38,7 @@ const ProjectForm = ({ route }) => {
 
     useEffect(() => {
         if(projectId != -1){
-            cleanFields();
             updateProject();
-        }else{
-            cleanFields();
-            console.log("project not found ");
         }
       }, []);
 
@@ -56,24 +52,26 @@ const ProjectForm = ({ route }) => {
                 setBanner(projectObtained.banner);
                 setName(projectObtained.name);
                 setDescription(projectObtained.description)
-                console.log(projectObtained)
+                setIsLoading(false);
             } catch (error) {
-                console.log("Error:", error.message); // Imprimir el mensaje de error
+                Toast.show({
+                  type:"error",
+                  text1: "Error!",
+                  text2: error.message ,
+                  autoHide: false,
+
+                });
             }};
    
-    const cleanFields = () => {
-        console.log("cleaning fields");
-    }
-
-
+    //metodo para validar el nombre
     const handleNameChange = (text) => {
         setName(text);
       };
-    
+    //metodo para validar la descripcion
       const handleDescriptionChange = (text) => {
         setDescription(text);
       };
-    
+    //metodo para manejar el cambio de banner y sus validaciones
       const handleBannerChange = (imageUrl) => {
         ImageCropPicker.openPicker({
             mediaType: 'photo',
@@ -96,18 +94,8 @@ const ProjectForm = ({ route }) => {
               });
             });
       };
-      /*
-    return (
-        <SafeAreaView style={{ flex: 1 }}>
-          <View style={styles.container}>
-          <Text>{action}</Text>
-          <Text>{projectId}</Text>
 
-          </View>
-        </SafeAreaView>
-      );
-      */
-
+      //metodo para hacer validaciones  y el submit
       const handleSubmit = async() => {
         // Aquí puedes manejar la lógica para enviar los datos del formulario
         // Por ejemplo, puedes realizar una llamada a una API para guardar la información en un servidor.
@@ -127,84 +115,124 @@ const ProjectForm = ({ route }) => {
         }
 
         try {
+
+        setIsLoading(true);
         const res = await httpClient.post("/project/"+action, formData, {
             headers: {
             'Content-Type': 'multipart/form-data',
             },
         });
-        
         // Realizar cualquier acción necesaria con la respuesta del servidor
         if(res.data.success){
           Toast.show({
             type:"success",
             text1: "Éxito!",
-            text2: res.data.message
+            text2: res.data.message,
+                  autoHide: false,
+                  style: styles.toastStyle, // Aplicamos el estilo personalizado
           });
         }else{
           Toast.show({
             type:"error",
             text1: "Error!",
-            text2: res.data.message
+            text2: res.data.message,
+                  autoHide: false,
+                  style: styles.toastStyle, // Aplicamos el estilo personalizado
           });
         }
         } catch (error) {
         Toast.show({
           type:"error",
           text1: "Error!",
-          text2: "El nombre del proyecto no se encuentra disponible"
+          text2: "Nombre no disponible o usuario no autenticado",
+                  autoHide: false,
+                  style: styles.toastStyle, // Aplicamos el estilo personalizado
         });
         // Manejar errores si es necesario
         }
+        setIsLoading(false);
       };
 
 
 return (
         <SafeAreaView style={{ flex: 1 }}>
           <View style={styles.container}>
-          <Toast />
-          {banner !== '' && <Image source={{ uri: banner }} style={styles.image} />}
-          <Button style={styles.bannerButtom} title="Seleccionar banner del proyecto" onPress={handleBannerChange} />
-          <TextInput
-            style={styles.input}
-            placeholder="Nombre del proyecto"
-            value={name}
-            onChangeText={handleNameChange}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Descripción del proyecto"
-            multiline
-            numberOfLines={5}
-            value={description}
-            onChangeText={handleDescriptionChange}
-          />
+          <LoadingSpinner isVisible={isLoading} text="Cargando..." />
+          <ScrollView>
+            <View style={styles.imageContainer}>
+                {banner !== '' && <Image source={{ uri: banner }} style={styles.image} />}
+                <TouchableOpacity style={styles.button} onPress={handleBannerChange}>
+                  <Text style={styles.buttonText}>Seleccionar Banner</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.textContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Nombre del proyecto"
+                  value={name}
+                  onChangeText={handleNameChange}
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Descripción del proyecto"
+                  multiline
+                  numberOfLines={5}
+                  value={description}
+                  onChangeText={handleDescriptionChange}
+                />
+            </View>
             
-          
-          <Button title={action=="create"?"Crear":"Editar"} onPress={handleSubmit} />
+            <Button title={action=="create"?"Crear":"Editar"} onPress={handleSubmit} />
+          </ScrollView>
           </View>    
+          <Toast />
         </SafeAreaView>);
 
 }
 const styles = StyleSheet.create({
+    imageContainer:{
+      paddingVertical: 10,       // Padding hacia abajo
+      alignItems: 'center',      // Centrar los elementos horizontalmente
+      justifyContent: 'center',  // Centrar los elementos verticalmente
+      marginBottom: 20,    
+    },
     container: {
         padding: 16,
       },
       input: {
         borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
+        borderColor: colors.SECUNDARY4,
+        borderRadius: 12,
         padding: 10,
         marginBottom: 10,
       },
-      image: {
+    image: {
+        borderWidth: 1,             // Ancho del borde
+        borderColor: colors.PRIMARY1,
         width: '100%',
         height: 200,
         resizeMode: 'cover',
         marginBottom: 10,
       },
-      bannerButtom: {
+      button: {
+        backgroundColor: colors.CUATERNARY1,
+        borderRadius: 20, // Ajusta el valor para controlar la curvatura de los bordes
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+      },
+      buttonText: {
+        color: colors.SECUNDARY1,
+        fontSize: 16,
+      },
+      textContainer:{
+        width: '100%',
 
-      }
+
+      },
+      toastStyle: {
+        // Estilo para el Toast
+        zIndex: 9999, // Asegura que el Toast esté por encima de otros elementos
+      },
   
   });
 export default ProjectForm;
