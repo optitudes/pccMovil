@@ -128,6 +128,16 @@ const SearchVideo = ({ navigation }) => {
               ItemSeparatorComponent={ItemSeparatorView}
               renderItem={renderItem}
             />
+
+            <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate("videoForm",{action:"create",videoId:-1})}>
+               <Icon
+                name={"plus"}
+                color={colors.SECUNDARY1}
+                size={24}
+                type="material-community"
+              />
+            </TouchableOpacity>
+
             <View style={styles.navigationContainer}>
             {isNotStringEmpty(prevPage) && (
             <TouchableOpacity onPress={() => searchByLink(prevPage)}>
@@ -200,6 +210,17 @@ const styles = StyleSheet.create({
         height: 150,
         borderWidth: 1,
         borderRadius: 8,
+      },
+      floatingButton: {
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
+        backgroundColor: colors.CUATERNARY1,
+        borderRadius: 30,
+        width: 60,
+        height: 60,
+        justifyContent: 'center',
+        alignItems: 'center',
       },
   });
 export default SearchVideo;

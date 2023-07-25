@@ -5,6 +5,7 @@
 import React, { useState,useContext, useEffect } from 'react';
 import {  Icon } from "react-native-elements";
 import Toast from 'react-native-toast-message';
+import YoutubePlayer from 'react-native-youtube-iframe';
 
 // import all the components we are going to use
 import {
@@ -18,7 +19,7 @@ import {
     TouchableOpacity,
  Button,
 } from 'react-native';
-import ProjectCard from '../../../components/ProjectCard';
+import { Picker } from '@react-native-picker/picker';
 import httpClient from '../../../config/httpClient';
 import colors from '../../../constants/colors';
 import LoadingSpinner from '../../../components/LoadingSpinner';
@@ -27,48 +28,78 @@ import ImageCropPicker from 'react-native-image-crop-picker';
 import { isNotStringEmpty } from "../../../utils/helpers";
 
 
-const ProjectForm = ({ route }) => {
-    const { action, projectId } = route.params;
+const VideoForm = ({ route }) => {
+    const { action, videoId } = route.params;
     const [isLoading, setIsLoading] = useState(false);
 
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
     const [banner, setBanner] = useState('');
+    const [linkVideo,setLinkVideo] = useState('');
+    const [titleVideo,setTitleVideo] = useState('');
+    const [descVideo,setDescVideo] = useState('');
+    const [projectNames,setProjectNames] = useState(['']);
+    const [projectNameSelected, setProjectNameSelected] = useState('');
 
     useEffect(() => {
-        if(projectId != -1){
-            updateProject();
+        if(videoId != -1){
+            updateVideo();
         }
+        updateProjectNames();
       }, []);
 
-     //metoo que obtiene los proyectos con la palabra
-    const updateProject = async () => {
+     //metoo que obtiene todos los datos de un video 
+    const updateVideo = async () => {
             
-            try {
-                setIsLoading(true);
-                const res = await httpClient.get("/project/get/"+projectId);
-                let projectObtained = res.data.data;
-                setBanner(projectObtained.banner);
-                setName(projectObtained.name);
-                setDescription(projectObtained.description)
-                setIsLoading(false);
-            } catch (error) {
-                Toast.show({
-                  type:"error",
-                  text1: "Error!",
-                  text2: error.message ,
-                  autoHide: false,
+        try {
+            setIsLoading(true);
+            const res = await httpClient.get("/video/get/"+videoId);
+            let videoObtained = res.data.data;
+            setLinkVideo(videoObtained.link);
+            setTitleVideo(videoObtained.title);
+            setDescVideo(videoObtained.description)
+            setBanner(videoObtained)
+        } catch (error) {
+            Toast.show({
+                type:"error",
+                text1: "Error!",
+                text2: error.message,
+                autoHide: false,
+                style: styles.toastStyle, // Aplicamos el estilo personalizado
+          });
+        } finally {
+          setIsLoading(false)
+        }
+};
+ //metoo que obtiene todos los datos de un video 
+    const updateProjectNames = async () => {
+            
+        try {
+            setIsLoading(true);
+            const res = await httpClient.get("/project/getNames");
+            setProjectNames(res.data.data);
+        } catch (error) {
+            Toast.show({
+                type:"error",
+                text1: "Error!",
+                text2: error.message,
+                autoHide: false,
+                style: styles.toastStyle, // Aplicamos el estilo personalizado
+          });
+        } finally {
+          setIsLoading(false)
+        }
+};
 
-                });
-            }};
-   
-    //metodo para validar el nombre
-    const handleNameChange = (text) => {
-        setName(text);
+    //metodo para validar el titulo del video 
+    const handleTitleChange = (text) => {
+        setTitleVideo(text);
       };
     //metodo para validar la descripcion
       const handleDescriptionChange = (text) => {
-        setDescription(text);
+        setDescVideo(text);
+      };
+    //metodo para validar el link del video 
+      const handleLinkChange = (text) => {
+        setLinkVideo(text);
       };
     //metodo para manejar el cambio de banner y sus validaciones
       const handleBannerChange = (imageUrl) => {
@@ -89,7 +120,7 @@ const ProjectForm = ({ route }) => {
               Toast.show({
                 type:"error",
                 text1: "Error!",
-                text2: 'Error al seleccionar la imagen'
+                text2: error.message
               });
             });
       };
@@ -100,9 +131,12 @@ const ProjectForm = ({ route }) => {
         // Por ejemplo, puedes realizar una llamada a una API para guardar la información en un servidor.
         // Crear un nuevo objeto FormData
         const formData = new FormData();
-        formData.append('name', name);
-        formData.append('description', description);
-        formData.append('id', projectId);
+        formData.append('title', titleVideo);
+        formData.append('description', descVideo);
+        formData.append('id', videoId);
+        formData.append('link', linkVideo);
+        formData.append('proyecto', projectNameSelected);
+
 
         // Asegúrate de que se haya seleccionado una imagen antes de agregarla al FormData
         if (banner !== '') {
@@ -113,10 +147,12 @@ const ProjectForm = ({ route }) => {
         });
         }
 
+        console.log(formData);
+        /*
         try {
 
         setIsLoading(true);
-        const res = await httpClient.post("/project/"+action, formData, {
+        const res = await httpClient.post("/video/"+action, formData, {
             headers: {
             'Content-Type': 'multipart/form-data',
             },
@@ -150,6 +186,7 @@ const ProjectForm = ({ route }) => {
         // Manejar errores si es necesario
         }
         setIsLoading(false);
+        */
       };
 
 
@@ -164,21 +201,50 @@ return (
                   <Text style={styles.buttonText}>Seleccionar Banner</Text>
                 </TouchableOpacity>
             </View>
+            {linkVideo!== '' && 
+                <View style={styles.videoContainer}>
+                        {/* Video de YouTube */}
+                        <YoutubePlayer
+                            height={300}
+                            play={false}
+                            videoId={linkVideo}
+                        />
+                </View>
+                }
+                <TextInput
+                  style={styles.input}
+                  placeholder="Id del video de youtube"
+                  value={linkVideo}
+                  onChangeText={handleLinkChange}
+                />
             <View style={styles.textContainer}>
                 <TextInput
                   style={styles.input}
-                  placeholder="Nombre del proyecto"
-                  value={name}
-                  onChangeText={handleNameChange}
+                  placeholder="Titulo del video"
+                  value={titleVideo}
+                  onChangeText={handleTitleChange}
                 />
                 <TextInput
                   style={styles.input}
-                  placeholder="Descripción del proyecto"
+                  placeholder="Descripción del video"
                   multiline
                   numberOfLines={5}
-                  value={description}
+                  value={descVideo}
                   onChangeText={handleDescriptionChange}
                 />
+            </View>
+            <View style={styles.dropbox}>
+                <Text>Selecciona un proyecto:</Text>
+                <Picker
+                    selectedValue={projectNameSelected??''}
+                    style={{ height: 50, width: 200 }}
+                    onValueChange={(itemValue, itemIndex) => setProjectNameSelected(itemValue)}
+                >
+                    {projectNames.map((item, index) => (
+                    <Picker.Item key={index} label={item} value={item} />
+                    ))}
+                </Picker>
+                <Text>Seleccionaste: {projectNameSelected}</Text>
             </View>
             
             <Button title={action=="create"?"Crear":"Editar"} onPress={handleSubmit} />
@@ -232,6 +298,15 @@ const styles = StyleSheet.create({
         // Estilo para el Toast
         zIndex: 9999, // Asegura que el Toast esté por encima de otros elementos
       },
+      videoContainer: {
+        height: 230, // Altura fija del video
+      },
+      dropbox:{
+        paddingVertical: 10,       // Padding hacia abajo
+        alignItems: 'center',      // Centrar los elementos horizontalmente
+        justifyContent: 'center',  // Centrar los elementos verticalmente
+        marginBottom: 20,
+      }
   
   });
-export default ProjectForm;
+export default VideoForm;

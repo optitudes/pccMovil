@@ -9,6 +9,8 @@ import SearchPodcast from "../screens/podcast/SearchPodcast";
 
 
 import VideoDetail from "../screens/video/VideoDetail"
+import VideoForm from "../screens/video/VideoForm"
+
 import PictureDetail from "../screens/picture/PictureDetail"
 import PodcastDetail from "../screens/podcast/PodcastDetail"
 import ProjectDetail from "../screens/project/ProjectDetail"
@@ -72,7 +74,10 @@ export default function StartStack() {
                 name="projectForm"
                 component={ProjectForm}
             />
-
+            <Stack.Screen
+                name="videoForm"
+                component={VideoForm}
+            />
 
         </Stack.Navigator>
     );
