@@ -22,6 +22,7 @@ const colors = {
     QUINARY1 : "#d8d448",
 
     APPROVED1: "#009688",
+    REPROVED1: "#CC6666"
     
   };
   export default colors; 

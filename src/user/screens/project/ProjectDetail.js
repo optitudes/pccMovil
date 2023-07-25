@@ -1,5 +1,5 @@
 import {Text} from 'native-base';
-import React, {  useState, useEffect } from 'react';
+import React, {  useState, useEffect, useContext } from 'react';
 import {  SafeAreaView,View, ScrollView, TouchableNativeFeedback, TouchableOpacity,StyleSheet } from "react-native";
 import ImageView from '../../../components/ImageView';
 import LoadingSpinner from '../../../components/LoadingSpinner';
@@ -11,9 +11,13 @@ import LastPictures from '../../../components/LastPictures';
 import LastPodcast from '../../../components/LastPodcast';
 import colors from '../../../constants/colors';
 
+import authContext from '../../../context/authContext';
+import Toast from 'react-native-toast-message';
+
 const ProjectDetail = ({route, navigation }) => {
     const idProject = route.params.idProject??-1;
     const [isLoading, setIsLoading] = useState(false);
+    const { authenticated, userInfo} = useContext(authContext);
 
     const [bannerProject,setBannerProject] = useState('https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif');
     const [nameProject,setNameProject] = useState('');
@@ -35,11 +39,57 @@ const ProjectDetail = ({route, navigation }) => {
                 setNameProject(projectObtained.name);
                 setDescProject(projectObtained.description)
             } catch (error) {
-                console.log("Error:", error.message); // Imprimir el mensaje de error
-                console.log("Stack Trace:", error.stack);
+                Toast.show({
+                  type:"error",
+                  text1: "Error!",
+                  text2: error.message,
+                          autoHide: false,
+                          style: styles.toastStyle, // Aplicamos el estilo personalizado
+                });
             } finally {
               setIsLoading(false)
             }
+    };
+    const deleteProject = async () => {
+        const formData = new FormData();
+        formData.append('id', idProject);
+
+        try {
+
+        setIsLoading(true);
+        const res = await httpClient.post("/project/remove", formData, {
+          headers: {
+          'Content-Type': 'multipart/form-data',
+          },
+      });
+
+        // Realizar cualquier acción necesaria con la respuesta del servidor
+        if(res.data.success){
+          navigation.reset({
+            index: 0, // Establecer el índice del historial en 0 (primera pantalla)
+            routes: [{ name: "start" }], // Definir la nueva vista como la primera
+          });
+          //navigation.popToTop();
+        }else{
+          Toast.show({
+            type:"error",
+            text1: "Error!",
+            text2: res.data.message,
+                  autoHide: false,
+                  style: styles.toastStyle, // Aplicamos el estilo personalizado
+          });
+        }
+        } catch (error) {
+        Toast.show({
+          type:"error",
+          text1: "Error!",
+          text2: error.message,
+                  autoHide: false,
+                  style: styles.toastStyle, // Aplicamos el estilo personalizado
+        });
+        // Manejar errores si es necesario
+        }
+        setIsLoading(false);
     };
 
     return (
@@ -67,7 +117,10 @@ const ProjectDetail = ({route, navigation }) => {
 
           </View>
         </ScrollView>
-          <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate("projectForm",{action:"edit",projectId:idProject})}>
+
+            {authenticated && userInfo.userType.levelAccess == 0  && (
+              <>
+          <TouchableOpacity style={styles.floatingRightButton} onPress={() => navigation.navigate("projectForm",{action:"edit",projectId:idProject})}>
               <Icon
               name={"pencil-box"}
               color={colors.SECUNDARY1}
@@ -75,6 +128,18 @@ const ProjectDetail = ({route, navigation }) => {
               type="material-community"
             />
           </TouchableOpacity>
+          <TouchableOpacity style={styles.floatingLeftButton} onPress={deleteProject}>
+              <Icon
+              name={"delete-outline"}
+              color={colors.SECUNDARY1}
+              size={24}
+              type="material-community"
+            />
+          </TouchableOpacity>
+          </>
+          )}
+
+          <Toast />
       </SafeAreaView>
     )
 }
@@ -110,7 +175,7 @@ const styles = StyleSheet.create({
       fontSize: 16,
       textAlign: 'center', // Centrar el texto de la descripción
     },
-    floatingButton: {
+    floatingRightButton: {
       position: 'absolute',
       bottom: 20,
       right: 20,
@@ -121,5 +186,16 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
+    floatingLeftButton: {
+      position: 'absolute',
+      bottom: 20,
+      left: 20,
+      backgroundColor: colors.REPROVED1,
+      borderRadius: 30,
+      width: 60,
+      height: 60,
+      justifyContent: 'center',
+      alignItems: 'center',
+    }
   });
 export default ProjectDetail;
