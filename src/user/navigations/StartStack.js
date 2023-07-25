@@ -12,6 +12,7 @@ import VideoDetail from "../screens/video/VideoDetail"
 import PictureDetail from "../screens/picture/PictureDetail"
 import PodcastDetail from "../screens/podcast/PodcastDetail"
 import ProjectDetail from "../screens/project/ProjectDetail"
+import ProjectForm from "../screens/project/ProjectForm"
 
 
 const Stack = createNativeStackNavigator();
@@ -66,6 +67,10 @@ export default function StartStack() {
             <Stack.Screen
                 name="projectDetail"
                 component={ProjectDetail}
+            />
+            <Stack.Screen
+                name="projectForm"
+                component={ProjectForm}
             />
 
 

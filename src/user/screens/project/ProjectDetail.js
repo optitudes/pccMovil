@@ -4,6 +4,7 @@ import {  SafeAreaView,View, ScrollView, TouchableNativeFeedback, TouchableOpaci
 import ImageView from '../../../components/ImageView';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import httpClient from '../../../config/httpClient';
+import {  Icon } from "react-native-elements";
 
 import LastVideos from '../../../components/LastVideos';
 import LastPictures from '../../../components/LastPictures';
@@ -33,7 +34,6 @@ const ProjectDetail = ({route, navigation }) => {
                 setBannerProject(projectObtained.banner);
                 setNameProject(projectObtained.name);
                 setDescProject(projectObtained.description)
-                console.log(projectObtained)
             } catch (error) {
                 console.log("Error:", error.message); // Imprimir el mensaje de error
                 console.log("Stack Trace:", error.stack);
@@ -63,9 +63,18 @@ const ProjectDetail = ({route, navigation }) => {
             <LastVideos sourceUrl={"getByProject/" + idProject} title="Videos"/>
             <LastPictures sourceUrl={"getByProject/" + idProject} title="Imagenes" />
             <LastPodcast sourceUrl={"getByProject/" + idProject} title="Podcasts"/>
+            
 
           </View>
         </ScrollView>
+          <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate("projectForm",{action:"edit",projectId:idProject})}>
+              <Icon
+              name={"pencil-box"}
+              color={colors.SECUNDARY1}
+              size={24}
+              type="material-community"
+            />
+          </TouchableOpacity>
       </SafeAreaView>
     )
 }
@@ -100,6 +109,17 @@ const styles = StyleSheet.create({
     description: {
       fontSize: 16,
       textAlign: 'center', // Centrar el texto de la descripción
+    },
+    floatingButton: {
+      position: 'absolute',
+      bottom: 20,
+      right: 20,
+      backgroundColor: colors.QUINARY1,
+      borderRadius: 30,
+      width: 60,
+      height: 60,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   });
 export default ProjectDetail;
