@@ -55,8 +55,9 @@ const VideoForm = ({ route }) => {
             let videoObtained = res.data.data;
             setLinkVideo(videoObtained.link);
             setTitleVideo(videoObtained.title);
-            setDescVideo(videoObtained.description)
-            setBanner(videoObtained)
+            setDescVideo(videoObtained.description);
+            setBanner(videoObtained.banner);
+            console.log(videoObtained);
         } catch (error) {
             Toast.show({
                 type:"error",
@@ -193,7 +194,7 @@ return (
           <LoadingSpinner isVisible={isLoading} text="Cargando..." />
           <ScrollView>
             <View style={styles.imageContainer}>
-                {banner !== '' && <Image source={{ uri: banner }} style={styles.image} />}
+                {banner !== null && banner !== '' && <Image source={{ uri: banner }} style={styles.image} />}
                 <TouchableOpacity style={styles.button} onPress={handleBannerChange}>
                   <Text style={styles.buttonText}>Seleccionar Banner</Text>
                 </TouchableOpacity>
@@ -230,19 +231,23 @@ return (
                   onChangeText={handleDescriptionChange}
                 />
             </View>
-            <View style={styles.dropbox}>
-                <Text>Selecciona un proyecto:</Text>
-                <Picker
-                    selectedValue={projectNameSelected??''}
-                    style={{ height: 50, width: 200 }}
-                    onValueChange={(itemValue, itemIndex) => setProjectNameSelected(itemValue)}
-                >
-                    {projectNames.map((item, index) => (
-                    <Picker.Item key={index} label={item} value={item} />
-                    ))}
-                </Picker>
-                <Text>Seleccionaste: {projectNameSelected}</Text>
-            </View>
+            {action=='create'  && (
+                <>
+              <View style={styles.dropbox}>
+                  <Text>Selecciona un proyecto:</Text>
+                  <Picker
+                      selectedValue={projectNameSelected??''}
+                      style={{ height: 50, width: 200 }}
+                      onValueChange={(itemValue, itemIndex) => setProjectNameSelected(itemValue)}
+                  >
+                      {projectNames.map((item, index) => (
+                      <Picker.Item key={index} label={item} value={item} />
+                      ))}
+                  </Picker>
+                  <Text>Seleccionaste: {projectNameSelected}</Text>
+              </View>
+              </>
+              )}
             
             <Button title={action=="create"?"Crear":"Editar"} onPress={handleSubmit} />
           </ScrollView>
