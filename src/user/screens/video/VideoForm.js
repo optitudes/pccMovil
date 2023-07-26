@@ -135,7 +135,7 @@ const VideoForm = ({ route }) => {
         formData.append('description', descVideo);
         formData.append('id', videoId);
         formData.append('link', linkVideo);
-        formData.append('proyecto', projectNameSelected);
+        formData.append('projectName', projectNameSelected);
 
 
         // Asegúrate de que se haya seleccionado una imagen antes de agregarla al FormData
@@ -147,8 +147,6 @@ const VideoForm = ({ route }) => {
         });
         }
 
-        console.log(formData);
-        /*
         try {
 
         setIsLoading(true);
@@ -186,7 +184,6 @@ const VideoForm = ({ route }) => {
         // Manejar errores si es necesario
         }
         setIsLoading(false);
-        */
       };
 
 
