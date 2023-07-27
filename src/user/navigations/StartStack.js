@@ -12,7 +12,10 @@ import VideoDetail from "../screens/video/VideoDetail"
 import VideoForm from "../screens/video/VideoForm"
 
 import PictureDetail from "../screens/picture/PictureDetail"
+import PictureForm   from "../screens/picture/PictureForm"
+
 import PodcastDetail from "../screens/podcast/PodcastDetail"
+
 import ProjectDetail from "../screens/project/ProjectDetail"
 import ProjectForm from "../screens/project/ProjectForm"
 
@@ -78,7 +81,10 @@ export default function StartStack() {
                 name="videoForm"
                 component={VideoForm}
             />
-
+            <Stack.Screen
+                name="pictureForm"
+                component={PictureForm}
+            />
         </Stack.Navigator>
     );
 }
