@@ -45,7 +45,7 @@ const VideoDetail = ({route, navigation }) => {
 
     const deleteVideo = async () => {
       const formData = new FormData();
-      formData.append('id', idProject);
+      formData.append('id', idVideo);
 
       try {
 
@@ -107,6 +107,8 @@ const VideoDetail = ({route, navigation }) => {
                   </View>
                 </ScrollView>
             </View>
+          {authenticated && userInfo.userType.levelAccess == 0  && (
+          <>
           <TouchableOpacity style={styles.floatingRightButton} onPress={() => navigation.navigate("videoForm",{action:"edit",videoId:idVideo})}>
               <Icon
               name={"pencil-box"}
@@ -123,6 +125,8 @@ const VideoDetail = ({route, navigation }) => {
               type="material-community"
             />
           </TouchableOpacity>
+          </>
+          )}
           <Toast />
       </SafeAreaView>
     )
