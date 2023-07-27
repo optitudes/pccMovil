@@ -134,6 +134,7 @@ const SearchPicture = ({ navigation }) => {
               ItemSeparatorComponent={ItemSeparatorView}
               renderItem={renderItem}
             />
+            {authenticated && userInfo.userType.levelAccess == 0  && (
             <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate("pictureForm",{action:"create",pictureId:-1})}>
                <Icon
                 name={"plus"}
@@ -141,7 +142,7 @@ const SearchPicture = ({ navigation }) => {
                 size={24}
                 type="material-community"
               />
-            </TouchableOpacity>
+            </TouchableOpacity>)}
             <View style={styles.navigationContainer}>
             {isNotStringEmpty(prevPage) && (
             <TouchableOpacity onPress={() => searchByLink(prevPage)}>

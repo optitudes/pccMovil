@@ -1,5 +1,5 @@
 import {Text} from 'native-base';
-import React, {  useState, useEffect } from 'react';
+import React, {  useState, useEffect,useContext } from 'react';
 import {  SafeAreaView,View, ScrollView, TouchableNativeFeedback, TouchableOpacity,StyleSheet } from "react-native";
 import ImageView from '../../../components/ImageView';
 import LoadingSpinner from '../../../components/LoadingSpinner';
@@ -7,14 +7,16 @@ import httpClient from '../../../config/httpClient';
 import Toast from 'react-native-toast-message';
 import {  Icon } from "react-native-elements";
 import colors from '../../../constants/colors';
+import authContext from '../../../context/authContext';
 const PictureDetail = ({route, navigation }) => {
+    const { authenticated, userInfo} = useContext(authContext);
+
     const idPicture = route.params.idPicture??-1;
     const [isLoading, setIsLoading] = useState(false);
 
     const [linkPicture,setLinkPicture] = useState('https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif');
     const [titlePicture,setTitlePicture] = useState('');
     const [descPicture,setDescPicture] = useState('');
-
 
     useEffect(() => {
           updatePicture();
@@ -99,7 +101,8 @@ const PictureDetail = ({route, navigation }) => {
                 </ScrollView>
             </View>
 
-
+            {authenticated && userInfo.userType.levelAccess == 0  && (
+            <>
             <TouchableOpacity style={styles.floatingRightButton} onPress={() => navigation.navigate("pictureForm",{action:"edit",pictureId:idPicture})}>
               <Icon
               name={"pencil-box"}
@@ -116,7 +119,8 @@ const PictureDetail = ({route, navigation }) => {
               type="material-community"
             />
           </TouchableOpacity>
-
+         </>
+          )}
           <Toast />
         </SafeAreaView>
     )
