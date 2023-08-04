@@ -22,9 +22,8 @@ import { Picker } from '@react-native-picker/picker';
 import httpClient from '../../../config/httpClient';
 import colors from '../../../constants/colors';
 import LoadingSpinner from '../../../components/LoadingSpinner';
-import authContext from '../../../context/authContext';
 import ImageCropPicker from 'react-native-image-crop-picker';
-import { isNotStringEmpty } from "../../../utils/helpers";
+import DocumentPicker from 'react-native-document-picker';
 
 
 
@@ -40,6 +39,8 @@ const PodcastForm = ({ route }) => {
     const [sound, setSound] = useState(null);
 
     const [banner, setBanner] = useState('');
+    const [soundName,setSoundName] = useState('');
+    const [podcast,setPodcast] = useState('');
 
     const [projectNames,setProjectNames] = useState(['']);
     const [projectNameSelected, setProjectNameSelected] = useState('');
@@ -63,25 +64,29 @@ const updateSound = (linkSound) => {
     ));
 
   }
-  const playSound = () => {
-    console.log('trying to play the song');
-    if (sound) {
-      sound.play(success => {
-        if (success) {
-          console.log('Sound played successfully');
-        } else {
-          console.log('Sound failed to play');
-        }
-      });
-      setIsPlaying(true);
-    }
-    console.log(sound);
-  };
 
-  const stopSound = () => {
-    if (sound) {
-      sound.stop();
-      setIsPlaying(false);
+  const pickDocument = async () => {
+    try {
+      const result = await DocumentPicker.pickSingle({
+        type: [DocumentPicker.types.audio],
+      });
+
+      console.log(
+        "Selected file:",
+        result.uri,
+        result.type, // MIME type
+        result.name,
+        result.size
+      );
+      setPodcast(result);
+      setSoundName(result.name);
+
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        // User cancelled the picker
+      } else {
+        throw err;
+      }
     }
   };
   //metoo que obtiene los proyectos con la palabra
@@ -139,7 +144,7 @@ const updateSound = (linkSound) => {
     //metodo para validar el link del video 
       const handleLinkChange = (text) => {
         setLinkPodcast(text);
-        updateSound(text);
+        //updateSound(text);
       };
     //metodo para manejar el cambio de banner y sus validaciones
       const handleBannerChange = (imageUrl) => {
@@ -186,7 +191,17 @@ const updateSound = (linkSound) => {
             name: 'banner.jpg', // El nombre que quieras asignar a la imagen en el servidor
         });
         }
+        // Asegúrate de que se haya seleccionado un audio antes de agregarla al FormData
+        if (podcast !== '') {
+        formData.append('podcast', {
+            uri: banner,
+            type: 'audio/mpeg3', // Asegúrate de proporcionar el tipo correcto de la imagen
+            name: 'podcast.mp3', // El nombre que quieras asignar a la imagen en el servidor
+        });
+        }
+        console.log(formData);
 
+        /*
         try {
 
         setIsLoading(true);
@@ -224,6 +239,8 @@ const updateSound = (linkSound) => {
         // Manejar errores si es necesario
         }
         setIsLoading(false);
+
+        */
       };
 
 
@@ -238,48 +255,26 @@ return (
                   <Text style={styles.buttonText}>Seleccionar Banner</Text>
                 </TouchableOpacity>
             </View>
-            {linkPodcast !== ''?<>
-                {isPlaying ? (
+            <View style={styles.imageContainer}>
+            <TouchableOpacity style={styles.button} onPress={pickDocument}>
+                  <Text style={styles.buttonText}>Seleccionar podcast(mp3)</Text>
+            </TouchableOpacity>
+            </View>
+            {soundName !== '' && (
                 <View style={styles.centerContainer}>
-                  <TouchableOpacity style={styles.stopButton} onPress={stopSound}>
-                  <Icon
-                    name={"stop"}
-                    color={colors.REPROVED1}
-                    size={24}
-                    type="material-community"
-                  />
-                </TouchableOpacity>
+                    <Text style={styles.info}>Nombre del archivo: {soundName}</Text>
                 </View>
-              ) : (
-                <View style={styles.centerContainer}>
-                  <TouchableOpacity style={styles.playButton} onPress={playSound}>
-                  <Icon
-                  name={"play"}
-                  color={colors.PRIMARY1}
-                  size={24}
-                  type="material-community"
-                />
-              </TouchableOpacity>
-              </View>
-              )}
-            </>:<></> 
-                }
-                <TextInput
-                  style={styles.input}
-                  placeholder="url del audio"
-                  value={linkPodcast}
-                  onChangeText={handleLinkChange}
-                />
+            )}
             <View style={styles.textContainer}>
                 <TextInput
                   style={styles.input}
-                  placeholder="Titulo del video"
+                  placeholder="Titulo del podcast"
                   value={titlePodcast}
                   onChangeText={handleTitleChange}
                 />
                 <TextInput
                   style={styles.input}
-                  placeholder="Descripción del video"
+                  placeholder="Descripción del podcast"
                   multiline
                   numberOfLines={5}
                   value={descPodcast}
@@ -316,17 +311,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    playButton:{
-        borderRadius: 60,
-        backgroundColor: colors.SECUNDARY3,
-        padding: 8,
-    },
-    stopButton:{
-        borderRadius: 60,
-        backgroundColor: colors.SECUNDARY3,
-        padding: 8,
 
+    info:{
+        borderRadius: 60,
+      paddingVertical: 10,       // Padding hacia abajo
     },
+    
     imageContainer:{
       paddingVertical: 10,       // Padding hacia abajo
       alignItems: 'center',      // Centrar los elementos horizontalmente
