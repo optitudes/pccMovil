@@ -1,10 +1,11 @@
 import {Text, } from 'native-base';
 import React, { useContext, useState, useEffect } from 'react';
-import {  SafeAreaView,View, ScrollView, TouchableNativeFeedback, TouchableOpacity,StyleSheet } from "react-native";
-import YoutubePlayer from 'react-native-youtube-iframe';
+import {  SafeAreaView,View, ScrollView, TouchableNativeFeedback, TouchableOpacity,StyleSheet,Button } from "react-native";
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import httpClient from '../../../config/httpClient';
+import Sound from 'react-native-sound';
 import ImageView from '../../../components/ImageView';
+import {  Icon } from "react-native-elements";
 
 import colors from '../../../constants/colors';
 const PodcastDetail = ({route, navigation }) => {
@@ -16,6 +17,43 @@ const PodcastDetail = ({route, navigation }) => {
     const [descPodcast,setDescPodcast] = useState('');
     const [bannerPodcast,setBannerPodcasts] = useState('');
 
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [sound, setSound] = useState(null);
+
+  const updateSound = (linkSound) => {
+      // Load the audio file when the component mounts
+    setSound( new Sound(
+      linkSound,
+      Sound.MAIN_BUNDLE,
+      error => {
+        if (error) {
+          console.log('Error loading the sound: ', error);
+        }
+      }
+    ));
+
+  }
+  const playSound = () => {
+    console.log('trying to play the song');
+    if (sound) {
+      sound.play(success => {
+        if (success) {
+          console.log('Sound played successfully');
+        } else {
+          console.log('Sound failed to play');
+        }
+      });
+      setIsPlaying(true);
+    }
+    console.log(sound);
+  };
+
+  const stopSound = () => {
+    if (sound) {
+      sound.stop();
+      setIsPlaying(false);
+    }
+  };
 
     useEffect(() => {
           updatePodcast();
@@ -28,6 +66,7 @@ const PodcastDetail = ({route, navigation }) => {
                 setIsLoading(true);
                 const res = await httpClient.get("/podcast/get/"+idPodcast);
                 let podcastsObtained = res.data.data;
+                updateSound(podcastsObtained.link);
                 setLinkPodcast(podcastsObtained.link);
                 setTitlePodcast(podcastsObtained.title);
                 setDescPodcast(podcastsObtained.description);
@@ -43,32 +82,59 @@ const PodcastDetail = ({route, navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
           <LoadingSpinner isVisible={isLoading} text="Cargando..." />
-             <View style={styles.wrapper}>
-        <View style={styles.podcastContainer}>
-          {/* podcast de YouTube */}
-
-          <ImageView imageUrl={bannerPodcast}/> 
-          <YoutubePlayer
-            height={0}
-            play={true}
-            videoId={linkPodcast}
-          />
-        </View>
-  
+          <View style={styles.wrapper}>
+            <View style={styles.podcastContainer}>
+              <ImageView imageUrl={bannerPodcast}/> 
+            </View>
             <Text style={styles.title}>{titlePodcast} </Text>
-        <ScrollView style={styles.scrollView}>
-          <View style={styles.textContainer}>
-            {/* Título */}
-  
-            {/* Descripción */}
-            <Text style={styles.description}>{descPodcast}</Text>
-          </View>
-        </ScrollView>
-</View>
+            <ScrollView style={styles.scrollView}>
+              <View style={styles.textContainer}>
+                <Text style={styles.description}>{descPodcast}</Text>
+              </View>
+              {isPlaying ? (
+                <View style={styles.centerContainer}>
+                  <TouchableOpacity style={styles.stopButton} onPress={stopSound}>
+                  <Icon
+                    name={"stop"}
+                    color={colors.REPROVED1}
+                    size={24}
+                    type="material-community"
+                  />
+                </TouchableOpacity>
+                </View>
+              ) : (
+                <View style={styles.centerContainer}>
+                  <TouchableOpacity style={styles.playButton} onPress={playSound}>
+                  <Icon
+                  name={"play"}
+                  color={colors.PRIMARY1}
+                  size={24}
+                  type="material-community"
+                />
+              </TouchableOpacity>
+              </View>
+              )}
+           </ScrollView>
+        </View>
       </SafeAreaView>
     )
 }
 const styles = StyleSheet.create({
+    centerContainer:{
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    playButton:{
+        borderRadius: 60,
+        backgroundColor: colors.SECUNDARY3,
+        padding: 8,
+    },
+    stopButton:{
+        borderRadius: 60,
+        backgroundColor: colors.SECUNDARY3,
+        padding: 8,
+
+    },
     container: {
       flex: 1,
       margin: 16, // Margen general de los bordes
