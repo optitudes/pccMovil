@@ -128,6 +128,14 @@ const SearchPodcast = ({ navigation }) => {
               ItemSeparatorComponent={ItemSeparatorView}
               renderItem={renderItem}
             />
+            <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate("podcastForm",{action:"create",podcastId:-1})}>
+               <Icon
+                name={"plus"}
+                color={colors.SECUNDARY1}
+                size={24}
+                type="material-community"
+              />
+            </TouchableOpacity>
             <View style={styles.navigationContainer}>
             {isNotStringEmpty(prevPage) && (
             <TouchableOpacity onPress={() => searchByLink(prevPage)}>
@@ -160,6 +168,17 @@ const SearchPodcast = ({ navigation }) => {
 
 }
 const styles = StyleSheet.create({
+floatingButton: {
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
+        backgroundColor: colors.CUATERNARY1,
+        borderRadius: 30,
+        width: 60,
+        height: 60,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
