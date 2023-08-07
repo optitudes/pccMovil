@@ -53,15 +53,6 @@ const PodcastForm = ({ route }) => {
       const result = await DocumentPicker.pickSingle({
         type: [DocumentPicker.types.audio],
       });
-
-      console.log(
-        "Selected file:",
-        result.uri,
-        result.type, // MIME type
-        result.name,
-        result.size
-      );
-
       setPodcast(result);
       setSoundName(result.name);
 
@@ -78,9 +69,10 @@ const PodcastForm = ({ route }) => {
           
           try {
               setIsLoading(true);
-              const res = await httpClient.get("/podcast/get/"+idPodcast);
+              const res = await httpClient.get("/podcast/get/"+podcastId);
               let podcastsObtained = res.data.data;
               setLinkPodcast(podcastsObtained.link);
+              setSoundName(podcastsObtained.title+".mp3")
               setTitlePodcast(podcastsObtained.title);
               setDescPodcast(podcastsObtained.description);
               setBanner(podcastsObtained.banner);
@@ -124,11 +116,6 @@ const PodcastForm = ({ route }) => {
       const handleDescriptionChange = (text) => {
         setDescPodcast(text);
       };
-    //metodo para validar el link del video 
-      const handleLinkChange = (text) => {
-        setLinkPodcast(text);
-        //updateSound(text);
-      };
     //metodo para manejar el cambio de banner y sus validaciones
       const handleBannerChange = (imageUrl) => {
         ImageCropPicker.openPicker({
@@ -165,16 +152,21 @@ const PodcastForm = ({ route }) => {
         formData.append('projectName', projectNameSelected);
 
 
-        if (podcast !== null) {
+        if (podcast !== null || linkPodcast !== "" ) {
+          var podcastUri = "";
+          if(podcast !== null){
+            const fileUri = podcast.uri;
+            const localFilePath =  `${RNFS.ExternalDirectoryPath}/Pictures/${podcast.name}`;
 
-          const fileUri = podcast.uri;
-          const localFilePath =  `${RNFS.ExternalDirectoryPath}/Pictures/${podcast.name}`;
-
-          await RNFS.copyFile(fileUri, localFilePath);
+            await RNFS.copyFile(fileUri, localFilePath);
+            podcastUri = `file://${localFilePath}`;
+          }else{
+            podcastUri = linkPodcast;
+          }
           formData.append('podcast', {
-            uri: `file://${localFilePath}`,
-            type: podcast.type,
-            name: podcast.name,
+            uri: podcastUri,
+            type: 'audio/mp3',
+            name: 'podcast.mp3',
           });
         }
         // Asegúrate de que se haya seleccionado una imagen antes de agregarla al FormData
@@ -188,7 +180,7 @@ const PodcastForm = ({ route }) => {
         try {
 
         setIsLoading(true);
-        const res = await httpClient.post("/podcast/create",formData , {
+        const res = await httpClient.post("/podcast/"+action,formData , {
            headers: {
             'Content-Type': 'multipart/form-data',
             },
@@ -223,6 +215,7 @@ const PodcastForm = ({ route }) => {
         }
         setIsLoading(false);
 
+
       };
 
 
@@ -244,7 +237,7 @@ return (
             </View>
             {soundName !== '' && (
                 <View style={styles.centerContainer}>
-                    <Text style={styles.info}>Nombre del audio seleccionado: {soundName}</Text>
+                    <Text style={styles.info}>Podcast seleccionado : {soundName}</Text>
                 </View>
             )}
             <View style={styles.textContainer}>

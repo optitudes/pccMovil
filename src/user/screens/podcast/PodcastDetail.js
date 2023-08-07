@@ -6,9 +6,11 @@ import httpClient from '../../../config/httpClient';
 import Sound from 'react-native-sound';
 import ImageView from '../../../components/ImageView';
 import {  Icon } from "react-native-elements";
+import authContext from '../../../context/authContext';
 
 import colors from '../../../constants/colors';
 const PodcastDetail = ({route, navigation }) => {
+    const { authenticated, userInfo} = useContext(authContext);
     const idPodcast = route.params.idPodcast??-1;
     const [isLoading, setIsLoading] = useState(false);
 
@@ -54,6 +56,9 @@ const PodcastDetail = ({route, navigation }) => {
       setIsPlaying(false);
     }
   };
+  const deletePodcast = () => {
+    console.log("podcast borrado");
+  }
 
     useEffect(() => {
           updatePodcast();
@@ -115,11 +120,51 @@ const PodcastDetail = ({route, navigation }) => {
               </View>
               )}
            </ScrollView>
+            <>
+            <TouchableOpacity style={styles.floatingRightButton} onPress={() => navigation.navigate("podcastForm",{action:"edit",podcastId:idPodcast})}>
+              <Icon
+              name={"pencil-box"}
+              color={colors.SECUNDARY1}
+              size={24}
+              type="material-community"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.floatingLeftButton} onPress={deletePodcast}>
+              <Icon
+              name={"delete-outline"}
+              color={colors.SECUNDARY1}
+              size={24}
+              type="material-community"
+            />
+          </TouchableOpacity>
+         </>
         </View>
       </SafeAreaView>
     )
 }
 const styles = StyleSheet.create({
+    floatingRightButton: {
+      position: 'absolute',
+      bottom: 20,
+      right: 20,
+      backgroundColor: colors.QUINARY1,
+      borderRadius: 30,
+      width: 60,
+      height: 60,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    floatingLeftButton: {
+      position: 'absolute',
+      bottom: 20,
+      left: 20,
+      backgroundColor: colors.REPROVED1,
+      borderRadius: 30,
+      width: 60,
+      height: 60,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
     centerContainer:{
         justifyContent: 'center',
         alignItems: 'center',
