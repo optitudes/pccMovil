@@ -3,9 +3,7 @@
 
 // import React in our code
 import React, { useState,useContext, useEffect } from 'react';
-import {  Icon } from "react-native-elements";
 import Toast from 'react-native-toast-message';
-import Sound from 'react-native-sound';
 // import all the components we are going to use
 import {
   SafeAreaView,
@@ -24,7 +22,7 @@ import colors from '../../../constants/colors';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import DocumentPicker from 'react-native-document-picker';
-
+import RNFS from 'react-native-fs';
 
 
 const PodcastForm = ({ route }) => {
@@ -35,12 +33,10 @@ const PodcastForm = ({ route }) => {
     const [titlePodcast,setTitlePodcast] = useState('');
     const [descPodcast,setDescPodcast] = useState('');
 
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [sound, setSound] = useState(null);
 
     const [banner, setBanner] = useState('');
     const [soundName,setSoundName] = useState('');
-    const [podcast,setPodcast] = useState('');
+    const [podcast,setPodcast] = useState(null);
 
     const [projectNames,setProjectNames] = useState(['']);
     const [projectNameSelected, setProjectNameSelected] = useState('');
@@ -51,19 +47,6 @@ const PodcastForm = ({ route }) => {
         }
         updateProjectNames();
       }, []);
-const updateSound = (linkSound) => {
-      // Load the audio file when the component mounts
-    setSound( new Sound(
-      linkSound,
-      Sound.MAIN_BUNDLE,
-      error => {
-        if (error) {
-          console.log('Error loading the sound: ', error);
-        }
-      }
-    ));
-
-  }
 
   const pickDocument = async () => {
     try {
@@ -78,6 +61,7 @@ const updateSound = (linkSound) => {
         result.name,
         result.size
       );
+
       setPodcast(result);
       setSoundName(result.name);
 
@@ -96,7 +80,6 @@ const updateSound = (linkSound) => {
               setIsLoading(true);
               const res = await httpClient.get("/podcast/get/"+idPodcast);
               let podcastsObtained = res.data.data;
-              updateSound(podcastsObtained.link);
               setLinkPodcast(podcastsObtained.link);
               setTitlePodcast(podcastsObtained.title);
               setDescPodcast(podcastsObtained.description);
@@ -179,10 +162,21 @@ const updateSound = (linkSound) => {
         formData.append('title', titlePodcast);
         formData.append('description', descPodcast);
         formData.append('id', podcastId);
-        formData.append('link', linkPodcast);
         formData.append('projectName', projectNameSelected);
 
 
+        if (podcast !== null) {
+
+          const fileUri = podcast.uri;
+          const localFilePath =  `${RNFS.ExternalDirectoryPath}/Pictures/${podcast.name}`;
+
+          await RNFS.copyFile(fileUri, localFilePath);
+          formData.append('podcast', {
+            uri: `file://${localFilePath}`,
+            type: podcast.type,
+            name: podcast.name,
+          });
+        }
         // Asegúrate de que se haya seleccionado una imagen antes de agregarla al FormData
         if (banner !== '') {
         formData.append('banner', {
@@ -191,22 +185,11 @@ const updateSound = (linkSound) => {
             name: 'banner.jpg', // El nombre que quieras asignar a la imagen en el servidor
         });
         }
-        // Asegúrate de que se haya seleccionado un audio antes de agregarla al FormData
-        if (podcast !== '') {
-        formData.append('podcast', {
-            uri: banner,
-            type: 'audio/mpeg3', // Asegúrate de proporcionar el tipo correcto de la imagen
-            name: 'podcast.mp3', // El nombre que quieras asignar a la imagen en el servidor
-        });
-        }
-        console.log(formData);
-
-        /*
         try {
 
         setIsLoading(true);
-        const res = await httpClient.post("/podcast/"+action, formData, {
-            headers: {
+        const res = await httpClient.post("/podcast/create",formData , {
+           headers: {
             'Content-Type': 'multipart/form-data',
             },
         });
@@ -232,7 +215,7 @@ const updateSound = (linkSound) => {
         Toast.show({
           type:"error",
           text1: "Error!",
-          text2: "Nombre no disponible o usuario no autenticado",
+          text2:  error.message,
                   autoHide: false,
                   style: styles.toastStyle, // Aplicamos el estilo personalizado
         });
@@ -240,7 +223,6 @@ const updateSound = (linkSound) => {
         }
         setIsLoading(false);
 
-        */
       };
 
 
@@ -262,7 +244,7 @@ return (
             </View>
             {soundName !== '' && (
                 <View style={styles.centerContainer}>
-                    <Text style={styles.info}>Nombre del archivo: {soundName}</Text>
+                    <Text style={styles.info}>Nombre del audio seleccionado: {soundName}</Text>
                 </View>
             )}
             <View style={styles.textContainer}>
