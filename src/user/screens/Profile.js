@@ -97,7 +97,7 @@ const [selectedParticipant, setSelectedParticipant] = useState(null);
 
             </View>
             </ScrollView > 
-            :<Login></Login>}
+            :<Login navigation={navigation}></Login>}
         </SafeAreaView >
     )
 }

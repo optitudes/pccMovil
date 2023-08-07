@@ -56,8 +56,46 @@ const PodcastDetail = ({route, navigation }) => {
       setIsPlaying(false);
     }
   };
-  const deletePodcast = () => {
-    console.log("podcast borrado");
+  const deletePodcast = async() => {
+      const formData = new FormData();
+      formData.append('id', idPodcast);
+
+      try {
+
+      setIsLoading(true);
+      const res = await httpClient.post("/podcast/remove", formData, {
+        headers: {
+        'Content-Type': 'multipart/form-data',
+        },
+    });
+
+      // Realizar cualquier acción necesaria con la respuesta del servidor
+      if(res.data.success){
+        navigation.reset({
+          index: 0, // Establecer el índice del historial en 0 (primera pantalla)
+          routes: [{ name: "start" }], // Definir la nueva vista como la primera
+        });
+        //navigation.popToTop();
+      }else{
+        Toast.show({
+          type:"error",
+          text1: "Error!",
+          text2: res.data.message,
+                autoHide: false,
+                style: styles.toastStyle, // Aplicamos el estilo personalizado
+        });
+      }
+      } catch (error) {
+      Toast.show({
+        type:"error",
+        text1: "Error!",
+        text2: error.message,
+                autoHide: false,
+                style: styles.toastStyle, // Aplicamos el estilo personalizado
+      });
+      // Manejar errores si es necesario
+      }
+      setIsLoading(false);
   }
 
     useEffect(() => {
@@ -120,6 +158,8 @@ const PodcastDetail = ({route, navigation }) => {
               </View>
               )}
            </ScrollView>
+
+          {authenticated && userInfo.userType.levelAccess == 0  && (
             <>
             <TouchableOpacity style={styles.floatingRightButton} onPress={() => navigation.navigate("podcastForm",{action:"edit",podcastId:idPodcast})}>
               <Icon
@@ -138,6 +178,7 @@ const PodcastDetail = ({route, navigation }) => {
             />
           </TouchableOpacity>
          </>
+          )}
         </View>
       </SafeAreaView>
     )

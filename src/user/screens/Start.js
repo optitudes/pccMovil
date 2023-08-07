@@ -97,7 +97,7 @@ const UserInfoHeader = () => {
             justifyContent="space-between" alignItems="center"
             mb="1"
         >
-            <Text fontSize="xl" fontWeight="bold" color="white">Hola!</Text>
+            <Text fontSize="xl" fontWeight="bold" color="white">Hola! Bienvenido al PCC!</Text>
             <NotificationsBell />
         </HStack>)
 

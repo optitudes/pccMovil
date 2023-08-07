@@ -2,7 +2,8 @@ import React from "react";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Profile from "../screens/Profile";
-
+import RecoveryPassword from "../../screens/auth/PasswordRecovery";
+import SignInUser from "../../screens/auth/SignInUser";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,7 +26,14 @@ export default function ProfileStack() {
                 name="profile"
                 component={Profile}
             />
-
+            <Stack.Screen
+                name="recoveryPassword"
+                component={RecoveryPassword}
+            />
+            <Stack.Screen
+                name="signInUser"
+                component={SignInUser}
+            />
         </Stack.Navigator>
     );
 }
