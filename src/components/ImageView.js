@@ -10,9 +10,12 @@ const ImageView = ({ imageUrl }) => {
   };
 
   return (
-    <View>
-      <TouchableOpacity onPress={toggleModal}>
-        <Image source={{ uri: imageUrl }} style={{ width: 360, height: 200 }} />
+    <View style={{flex:1}}>
+      <TouchableOpacity onPress={toggleModal} style={{flex:1}}>
+        <Image source={{ uri: imageUrl }}
+         style={{ flex: 1, width: undefined, height: undefined }}
+         resizeMode="cover"
+         />
       </TouchableOpacity>
 
       <Modal visible={isModalVisible} transparent={true}>

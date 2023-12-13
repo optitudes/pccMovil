@@ -24,7 +24,6 @@ const PictureDetail = ({route, navigation }) => {
     
     //metoo que obtiene los proyectos con la palabra
     const updatePicture = async () => {
-            
             try {
                 setIsLoading(true);
                 const res = await httpClient.get("/picture/get/"+idPicture);
@@ -94,7 +93,6 @@ const PictureDetail = ({route, navigation }) => {
                 <ScrollView style={styles.scrollView}>
                   <View style={styles.textContainer}>
                     {/* Título */}
-          
                     {/* Descripción */}
                     <Text style={styles.description}>{descPicture}</Text>
                   </View>
@@ -138,8 +136,9 @@ const styles = StyleSheet.create({
         padding: 8,
       },
     pictureContainer: {
-      height: 230, // Altura fija del Picture
+     flex:1,
     },
+
     scrollView: {
       flex: 1,
     },

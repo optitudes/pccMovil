@@ -10,9 +10,12 @@ import authContext from '../../context/authContext';
 
 import colors from '../../constants/colors';
 import LastProjects from '../../components/LastProjects';
+import AppInfo from '../../components/AppInfo';
+import Narratives from '../../components/Narratives';
 import LastVideos from '../../components/LastVideos';
 import LastPictures from '../../components/LastPictures';
 import LastPodcast from '../../components/LastPodcast';
+import Conclusions from '../../components/Conclusions';
 
 
 let directAccess = [
@@ -54,7 +57,10 @@ const Start = ({ navigation }) => {
                 <VStack background={colors.PRIMARY1}>
 
                     <UserInfoHeader />
+
                     <VStack pt="5" backgroundColor="white" borderTopRadius="3xl">
+
+
                         <Box
                             flex="1"
                             maxHeight="72"
@@ -75,10 +81,16 @@ const Start = ({ navigation }) => {
 
                             ))}
                         </Box>
+                        <AppInfo/>
+                        
+
                         <LastProjects />
                         <LastVideos sourceUrl="recentlyPosted" title="Videos más recientes"/>
                         <LastPictures sourceUrl="recentlyPosted" title="Imagenes más recientes" />
                         <LastPodcast sourceUrl="recentlyPosted" title="Podcasts más recientes"/>
+
+                        <Narratives/>
+                        <Conclusions/>
                     </VStack>
 
                 </VStack>
