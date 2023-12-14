@@ -95,7 +95,7 @@ const UserInfoHeader = () => {
             justifyContent="space-between" alignItems="center"
             mb="1"
         >
-            <Text fontSize="xl" fontWeight="bold" color="white">Hola! Juan</Text>
+            <Text fontSize="xl" fontWeight="bold" color="white">Hola!</Text>
             <NotificationsBell />
         </HStack>)
 

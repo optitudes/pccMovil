@@ -13,7 +13,7 @@ import colors from '../constants/colors';
  * @param {*}
  * @returns
  */
-export default function AppInfoCard({
+export default function ConclusionCard({
   item,
 }) {
 
@@ -27,19 +27,16 @@ export default function AppInfoCard({
       >
         {item.title??""}
       </Text>
-      <View style={{    borderColor: colors.PRIMARY1,  // Agregar esta línea
-    borderWidth: 3,borderRadius:12,paddingBottom:10}}>
+      <View style={{    borderColor: colors.AUX2,  // Agregar esta línea
+    borderWidth: 3,borderRadius:12}}>
 
+      
       <Text
         style={styles.content}
         numberOfLines={13}
       >
         {item.content??""}
       </Text>
-
-      {item.list != null &&  item.list.map((nombre, index) => (
-    <Text style={styles.listElement} key={index}>{`\u2022 ${nombre}`}</Text>
-      ))}
 
       </View>
     </View>
@@ -56,7 +53,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     backgroundColor: "white",
     borderWidth: 1,
-    borderColor: colors.PRIMARY2,
+    borderColor: colors.AUX2,
     shadowColor: "black",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
@@ -66,22 +63,15 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontSize: 18,
     fontWeight: "bold",
-    color: colors.PRIMARY1,
+    color: colors.AUX2,
     textAlign:"left"
   },
   content: {
     marginTop: 5,
-    fontSize: 10,
+    fontSize: 13,
     fontWeight: "bold",
     color: colors.SECUNDARY5,
-    textAlign:"center"
-  },
- listElement: {
-    marginTop: 5,
-    marginLeft:10,
-    fontSize: 10,
-    fontWeight: "bold",
-    color: colors.SECUNDARY5,
-    textAlign:"left"
+    textAlign:"center",
+    fontStyle: 'italic'
   },
 });

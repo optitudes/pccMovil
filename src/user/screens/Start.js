@@ -109,7 +109,7 @@ const UserInfoHeader = () => {
             justifyContent="space-between" alignItems="center"
             mb="1"
         >
-            <Text fontSize="xl" fontWeight="bold" color="white">Hola! Bienvenido al PCC!</Text>
+            <Text fontSize="xl" fontWeight="bold" color="white">Explora las percepciones del Paisaje Cultural Cafetero</Text>
             <NotificationsBell />
         </HStack>)
 

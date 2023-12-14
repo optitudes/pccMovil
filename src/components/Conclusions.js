@@ -3,7 +3,7 @@ import { Box, Text, HStack, Divider } from 'native-base';
 import React, { useState, useEffect } from 'react';
 import { Dimensions, TouchableOpacity } from "react-native";
 import Carousel from 'react-native-snap-carousel';
-import AppInfoCard from './AppInfoCard';
+import ConclusionCard from './ConclusionCard';
 
 
 
@@ -21,7 +21,7 @@ const Conclusions = (props) => {
     });
 
     const renderItem = ({ item, index }) => {
-        return <AppInfoCard  item={item} />;
+        return <ConclusionCard  item={item} />;
     };
 
 
@@ -48,11 +48,11 @@ const Conclusions = (props) => {
         borderRadius="md"
         marginY="5"
         borderWidth={"1"}
-        borderColor={colors.SECUNDARY6}
+        borderColor={colors.AUX2}
         background={colors.SECUNDARY23}
         alignItems="center"
     >
-            <Text fontSize={"xl"} color={colors.PRIMARY1} fontWeight={"semibold"} >Conclusiones</Text>
+            <Text fontSize={"xl"} color={colors.AUX2} fontWeight={"semibold"} >Conclusiones</Text>
         <Carousel
             ref={carouselRef}
             data={infoList}

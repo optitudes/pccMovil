@@ -20,6 +20,9 @@ const colors = {
 
     CUATERNARY1 : "#3b83bd",
     QUINARY1 : "#d8d448",
+    
+    AUX1: "#8f1f3c",
+    AUX2:"#ea7a39",
 
     APPROVED1: "#009688",
     REPROVED1: "#CC6666"
