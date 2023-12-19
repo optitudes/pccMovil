@@ -1,8 +1,8 @@
-# PCC Aplicativo Movil (Distribuciones Basadas en Debian)
+# PCC Aplicativo Movil (Distribuciones Basadas en <image src="https://www.debian.org/Pics/openlogo-50.png" alt="Sistema Operativo Debian">)
 
 Para la instalacion del entorno de ejecucucion del nuestra APP debemos instalar las siguientes herramientas:
 
-## ADB(Android Debuger)
+## ADB(Android Debuger <image src="https://www.gstatic.com/devrel-devsite/prod/ve1047bac2072596082ccc64a64088fb0a63507911cb620939426585897346e00/android/images/rebrand/lockup.svg" alt="Sistema Operativo Debian">)
 
 Para la instalacion de este componente se deben ejecutar los siguientes comandos en la terminal de un sistema Operativo tipo Unix
 ```
