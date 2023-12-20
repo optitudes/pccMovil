@@ -14,7 +14,8 @@ $ export PATH=$PATH:$ANDROID_HOME/emulator
 ```
 $ export PATH=$PATH:$ANDROID_HOME/platform-tools
 ```
-## WATCHMAN
+
+## WATCHMAN <image src="https://scontent.fclo1-4.fna.fbcdn.net/v/t39.2365-6/382493653_1061922124725556_6715288971044938610_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=e280be&_nc_ohc=FSs-5tvpjHYAX-u_-UL&_nc_oc=AQlz2frTBBs6RB0gwNCb5YrM0AFquU-bbjG5YsQ21ruuRZzYCVMD1c-aba7y02l4lmM&_nc_ht=scontent.fclo1-4.fna&oh=00_AfAI3ETNGWUknU2NwVOXUrW1wGMWR0QHZvYrNUHDdY3tPA&oe=659C656B" alt="Sistema Operativo Debian">
 
 Para la instalacion de WatchMan puede descargar el ejecutable del siguiente Repositorio
 <p>Este es <a href="http://example.com/" title="Title">
@@ -25,6 +26,7 @@ Si contamos con los repositorios ejecutar el comando.
 ```
 $ sudo apt-get install watchman
 ```
+
 ## Instalacion de Java.
 
 ```
@@ -48,7 +50,8 @@ $ source /etc/environment
 ```
 $ echo $JAVA_HOME
 ```
-## Instalacion de Node
+
+## Instalacion de Node <image src="https://nodejs.org/static/images/logo.svg" alt="Sistema Operativo Debian">
 En la instalacion de la herramienta Node debemos prestar atencion en la version, ya que necesitamos la version 15.
 
 Para poder seleccionar la version que necesitamos se debe instalar la herramienta NVM.
@@ -89,7 +92,7 @@ $ node -v
 $ npm install && npm i metro-react-native-babel-preset && npm i react-native-document-picker && npm i react-native-encrypted-storage && npm i
 ```
 
-## Instalacionde Android Studio
+## Instalacionde Android Studio <image src="https://www.gstatic.com/devrel-devsite/prod/ve1047bac2072596082ccc64a64088fb0a63507911cb620939426585897346e00/android/images/rebrand/lockup.svg" alt="Sistema Operativo Debian">
 Se debe elegir un SDK entre 28 y 31
 En el siguiente link puede descargar el ejecutable para instalar la herramienta.
 <p>Este es <a href="https://developer.android.com/studio?gclid=Cj0KCQiAm4WsBhCiARIsAEJIEzUONxhXFsw95iKAxW_ppXrEtlkVOaSzZB-54-uyBcBR0l5KCzdDJDkaAhQLEALw_wcB&gclsrc=aw.ds&hl=es-419" title="Title">
