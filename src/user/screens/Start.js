@@ -85,6 +85,7 @@ const Start = ({ navigation }) => {
                         
 
                         <LastProjects />
+                        <LastPictures sourceUrl="recentlyPosted" title="Imagenes interactivas más recientes" />
                         <LastVideos sourceUrl="recentlyPosted" title="Videos más recientes"/>
                         <LastPictures sourceUrl="recentlyPosted" title="Imagenes más recientes" />
                         <LastPodcast sourceUrl="recentlyPosted" title="Podcasts más recientes"/>
