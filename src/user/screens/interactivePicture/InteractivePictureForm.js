@@ -27,7 +27,7 @@ import authContext from '../../../context/authContext';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import { isNotStringEmpty } from "../../../utils/helpers";
 
-const PictureForm = ({ route }) => {
+const InteractivePictureForm = ({ route }) => {
     const { action, pictureId } = route.params;
     const [isLoading, setIsLoading] = useState(false);
 
@@ -38,19 +38,46 @@ const PictureForm = ({ route }) => {
     const [projectNames,setProjectNames] = useState(['']);
     const [projectNameSelected, setProjectNameSelected] = useState('');
 
+    const [questions, setQuestions] = useState(['']); // mínimo 1
+
     useEffect(() => {
         if(pictureId != -1){
             updatePicture();
         }
         updateProjectNames();
       }, []);
+
     useEffect(() => {
       if (projectNames.length > 0 && !projectNameSelected) {
         setProjectNameSelected(projectNames[0]);
       }
     }, [projectNames]);
 
+    const handleQuestionChange = (index, value) => {
+      const updatedQuestions = [...questions];
+      updatedQuestions[index] = value;
+      setQuestions(updatedQuestions);
+    };
 
+    const addQuestion = () => {
+      if (questions.length < 5) {
+        setQuestions([...questions, '']);
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Límite alcanzado",
+          text2: "Solo puedes agregar hasta 5 preguntas",
+          autoHide: true,
+          style: styles.toastStyle,
+        });
+      }
+    };
+
+    const removeQuestion = (index) => {
+      const updatedQuestions = [...questions];
+      updatedQuestions.splice(index, 1);
+      setQuestions(updatedQuestions);
+    };
      //metoo que obtiene todos los datos de un video 
     const updatePicture = async () => {
             
@@ -137,19 +164,34 @@ const PictureForm = ({ route }) => {
         formData.append('id', pictureId);
         formData.append('projectName', projectNameSelected);
 
-
-        // Asegúrate de que se haya seleccionado una imagen antes de agregarla al FormData
-        if (linkPicture !== '') {
-        formData.append('banner', {
-            uri: linkPicture,
-            type: 'image/jpeg', // Asegúrate de proporcionar el tipo correcto de la imagen
-            name: 'banner.jpg', // El nombre que quieras asignar a la imagen en el servidor
-        });
+        if (questions.length === 0 || questions.some(q => !isNotStringEmpty(q))) {
+          Toast.show({
+            type: "error",
+            text1: "Error!",
+            text2: "Debes ingresar al menos una pregunta válida",
+            autoHide: true,
+            style: styles.toastStyle,
+          });
+          return;
         }
-        try {
 
+        if (linkPicture !== '') {
+            formData.append('banner', {
+                uri: linkPicture,
+                type: 'image/jpeg', 
+                name: 'banner.jpg', 
+            });
+        }
+
+        questions.forEach((q, index) => {
+          formData.append(`questions[${index}][question]`, q);
+        });
+        try {
+                            
+
+        console.log(formData,action);
         setIsLoading(true);
-        const res = await httpClient.post("/picture/"+action, formData, {
+        const res = await httpClient.post("/interactive_picture/"+action, formData, {
             headers: {
             'Content-Type': 'multipart/form-data',
             },
@@ -213,6 +255,31 @@ return (
                   onChangeText={handleDescriptionChange}
                 />
             </View>
+
+            <View style={styles.textContainer}>
+              <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>Preguntas:</Text>
+              {questions.map((question, index) => (
+                <View key={index} style={{ marginBottom: 10 }}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder={`Pregunta ${index + 1}`}
+                    value={question}
+                    multiline
+                    onChangeText={(text) => handleQuestionChange(index, text)}
+                  />
+                  {questions.length > 1 && (
+                    <TouchableOpacity onPress={() => removeQuestion(index)}>
+                      <Text style={{ color: 'red', marginTop: 5 }}>Eliminar</Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              ))}
+              {questions.length < 5 && (
+                <TouchableOpacity style={styles.button} onPress={addQuestion}>
+                  <Text style={styles.buttonText}>Agregar Pregunta</Text>
+                </TouchableOpacity>
+              )}
+            </View>
             {action=='create'  && (
                 <>
               <View style={styles.dropbox}>
@@ -231,7 +298,7 @@ return (
               </>
               )}
             
-            <Button title={action=="create"?"Crear":"Editar"} onPress={handleSubmit} />
+            <Button title={action=="create"?"Crear imagen interactiva":"Editar"} onPress={handleSubmit} />
           </ScrollView>
           </View>    
           <Toast />
@@ -293,4 +360,4 @@ const styles = StyleSheet.create({
       }
   
   });
-export default PictureForm;
+export default InteractivePictureForm;

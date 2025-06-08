@@ -14,7 +14,9 @@ import AppInfo from '../../components/AppInfo';
 import Narratives from '../../components/Narratives';
 import LastVideos from '../../components/LastVideos';
 import LastPictures from '../../components/LastPictures';
+import LastInteractivePictures from '../../components/LastInteractivePictures';
 import LastPodcast from '../../components/LastPodcast';
+
 import Conclusions from '../../components/Conclusions';
 
 
@@ -85,7 +87,7 @@ const Start = ({ navigation }) => {
                         
 
                         <LastProjects />
-                        <LastPictures sourceUrl="recentlyPosted" title="Imagenes interactivas más recientes" />
+                        <LastInteractivePictures sourceUrl="recentlyPosted" title="Imagenes interactivas más recientes" />
                         <LastVideos sourceUrl="recentlyPosted" title="Videos más recientes"/>
                         <LastPictures sourceUrl="recentlyPosted" title="Imagenes más recientes" />
                         <LastPodcast sourceUrl="recentlyPosted" title="Podcasts más recientes"/>

@@ -4,6 +4,11 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Start from "../screens/Start";
 import SearchProject from "../screens/project/SearchProject";
 import SearchPicture from "../screens/picture/SearchPicture";
+
+import SearchInteractivePicture from "../screens/interactivePicture/SearchInteractivePicture";
+import InteractivePictureDetail from "../screens/interactivePicture/InteractivePictureDetail";
+import InteractivePictureForm   from "../screens/interactivePicture/InteractivePictureForm"
+
 import SearchVideo from "../screens/video/SearchVideo"
 import SearchPodcast from "../screens/podcast/SearchPodcast";
 
@@ -51,6 +56,10 @@ export default function StartStack() {
                 component={SearchPicture}
             />
             <Stack.Screen
+                name="searchInteractivePicture"
+                component={SearchInteractivePicture}
+            />
+            <Stack.Screen
                 name="searchVideo"
                 component={SearchVideo}
             />
@@ -75,6 +84,10 @@ export default function StartStack() {
                 component={ProjectDetail}
             />
             <Stack.Screen
+                name="interactivePictureDetail"
+                component={InteractivePictureDetail}
+            />
+            <Stack.Screen
                 name="projectForm"
                 component={ProjectForm}
             />
@@ -85,6 +98,10 @@ export default function StartStack() {
             <Stack.Screen
                 name="pictureForm"
                 component={PictureForm}
+            />
+            <Stack.Screen
+                name="interactivePictureForm"
+                component={InteractivePictureForm}
             />
             <Stack.Screen
                 name="podcastForm"
