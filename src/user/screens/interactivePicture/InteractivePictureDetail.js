@@ -166,6 +166,7 @@ const InteractivePictureDetail = ({route, navigation }) => {
                   )}
                 </View>
                
+            {authenticated && userInfo.userType.levelAccess == 0  && (
                 <TouchableOpacity
                   style={styles.addAnswerButton}
                   onPress={() => setShowAnswerForm(!showAnswerForm)}
@@ -174,6 +175,7 @@ const InteractivePictureDetail = ({route, navigation }) => {
                     {showAnswerForm ? 'Cancelar' : 'Agregar respuesta'}
                   </Text>
                 </TouchableOpacity>
+            )}
 
                 {showAnswerForm && (
                   <View style={styles.answerForm}>

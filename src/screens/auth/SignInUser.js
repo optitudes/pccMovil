@@ -48,6 +48,7 @@ const SignInUser = ({ navigation }) => {
                             onPress: () => {
 
                                 setData({ ...data, loading: false });
+                                navigation.navigate("login");
 
                             }
                         }
@@ -252,7 +253,7 @@ const SignInUser = ({ navigation }) => {
                                 onSubmit()
                             }
                         }}>
-                            Iniciar sesión
+                           Registrarse 
                         </Button>
                     </VStack>
                 </Box>

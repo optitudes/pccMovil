@@ -70,7 +70,7 @@ const [selectedParticipant, setSelectedParticipant] = useState(null);
                         onPress={() => logout()}
                         underlayColor="#DDDDDD"
                         >
-                        <Text style={styles.logoutBtnText}>logout</Text>
+                        <Text style={styles.logoutBtnText}>cerrar sesión</Text>
                         </TouchableHighlight>
 
                 <Modal
